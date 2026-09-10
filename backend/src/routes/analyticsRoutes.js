@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import * as analytics from '../controllers/analyticsController.js'
+import * as analytics from '../db/controllers/analytics.js'
 import { authenticate, authorize } from '../middleware/auth.js'
 import { asyncHandler } from '../utils/asyncHandler.js'
 
