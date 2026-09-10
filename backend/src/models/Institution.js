@@ -1,3 +1,4 @@
+// MongoDB model.
 import mongoose from 'mongoose'
 
 const institutionSchema = new mongoose.Schema({

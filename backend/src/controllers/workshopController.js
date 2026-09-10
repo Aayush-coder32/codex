@@ -1,3 +1,4 @@
+// MongoDB controller.
 import { Workshop } from '../models/Workshop.js'
 import { WorkshopEnrollment } from '../models/WorkshopEnrollment.js'
 import { Notification } from '../models/Notification.js'

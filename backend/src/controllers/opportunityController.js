@@ -1,3 +1,4 @@
+// MongoDB controller.
 import { Opportunity } from '../models/Opportunity.js'
 import { Company } from '../models/Company.js'
 import { SavedOpportunity } from '../models/SavedOpportunity.js'

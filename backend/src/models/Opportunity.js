@@ -1,3 +1,4 @@
+// MongoDB model.
 import mongoose from 'mongoose'
 
 const opportunitySchema = new mongoose.Schema({

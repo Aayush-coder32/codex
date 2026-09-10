@@ -1,3 +1,4 @@
+// MongoDB controller.
 import { Institution } from '../models/Institution.js'
 import { ApiError } from '../utils/ApiError.js'
 import { getPagination, pageMeta } from '../utils/pagination.js'

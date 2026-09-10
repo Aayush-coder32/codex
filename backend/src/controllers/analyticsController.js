@@ -1,3 +1,4 @@
+// MongoDB controller.
 import { User } from '../models/User.js'
 import { Company } from '../models/Company.js'
 import { Institution } from '../models/Institution.js'

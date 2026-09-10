@@ -1,3 +1,4 @@
+// MongoDB demo data seed.
 import bcrypt from 'bcryptjs'
 import { connectDatabase, disconnectDatabase } from '../config/database.js'
 import { env } from '../config/env.js'

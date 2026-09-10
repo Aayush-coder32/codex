@@ -1,3 +1,4 @@
+// MongoDB controller.
 import { Announcement } from '../models/Announcement.js'
 import { ApiError } from '../utils/ApiError.js'
 import { getPagination, pageMeta } from '../utils/pagination.js'

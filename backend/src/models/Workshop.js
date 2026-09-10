@@ -1,3 +1,4 @@
+// MongoDB model.
 import mongoose from 'mongoose'
 
 const workshopSchema = new mongoose.Schema({

@@ -1,3 +1,4 @@
+// MongoDB controller.
 import { Notification } from '../models/Notification.js'
 import { ApiError } from '../utils/ApiError.js'
 import { getPagination, pageMeta } from '../utils/pagination.js'

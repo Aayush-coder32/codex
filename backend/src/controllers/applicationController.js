@@ -1,3 +1,4 @@
+// MongoDB controller.
 import { Application } from '../models/Application.js'
 import { Opportunity } from '../models/Opportunity.js'
 import { StudentProfile } from '../models/StudentProfile.js'

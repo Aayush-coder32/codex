@@ -1,3 +1,4 @@
+// MongoDB controller.
 import fs from 'node:fs/promises'
 import { User } from '../models/User.js'
 import { StudentProfile } from '../models/StudentProfile.js'

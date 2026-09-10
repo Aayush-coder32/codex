@@ -1,3 +1,4 @@
+// MongoDB model.
 import mongoose from 'mongoose'
 
 const notificationSettingsSchema = new mongoose.Schema({
