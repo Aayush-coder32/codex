@@ -37,7 +37,7 @@ export default function AppShell({ role }) {
   const navigate = useNavigate(), location = useLocation()
   const suggestions = useMemo(() => query.trim().length > 1 ? opportunities.filter((x) => `${x.title} ${x.company} ${x.skills.join(' ')}`.toLowerCase().includes(query.toLowerCase())).slice(0,5) : [], [query, opportunities])
   const pageName = navs[role]?.find((x) => location.pathname.startsWith(x[1]))?.[0] || 'Dashboard'
-  const signOut = () => { logout(); navigate('/') }
+  const signOut = () => { logout().finally(() => navigate('/login')) }
   return <div className="min-h-screen bg-[#f5f7fb]"><Sidebar role={role} open={menu} onClose={() => setMenu(false)}/><div className="min-h-screen lg:pl-64">
     <header className="sticky top-0 z-30 flex h-20 items-center gap-3 border-b border-slate-200/80 bg-white/95 px-4 backdrop-blur md:px-6">
       <button onClick={() => setMenu(true)} className="btn-ghost px-2 lg:hidden" aria-label="Open navigation"><Menu size={22}/></button><div className="hidden min-w-32 sm:block"><p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Workspace</p><p className="text-sm font-bold text-navy-900">{pageName}</p></div>

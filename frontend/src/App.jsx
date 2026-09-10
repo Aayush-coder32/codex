@@ -13,16 +13,22 @@ import { EmptyState, ToastHost } from './components/common/UI'
 import { Compass } from 'lucide-react'
 
 function RequireRole({ role, children }) {
-  const { session } = useAuth()
+  const { session, initializing } = useAuth()
   const location = useLocation()
+  if (initializing) return <AuthLoading/>
   if (!session) return <Navigate to="/login" replace state={{ from: location.pathname }} />
   if (session.role !== role) return <Navigate to={`/${session.role}/dashboard`} replace />
   return children
 }
 
 function RoleHome() {
-  const { session } = useAuth()
+  const { session, initializing } = useAuth()
+  if (initializing) return <AuthLoading/>
   return <Navigate replace to={session ? `/${session.role}/dashboard` : '/login'} />
+}
+
+function AuthLoading() {
+  return <div className="grid min-h-screen place-items-center bg-slate-50"><div className="text-center"><span className="mx-auto block h-9 w-9 animate-spin rounded-full border-4 border-blue-100 border-t-blue-600"/><p className="mt-3 text-sm font-semibold text-slate-500">Checking your session…</p></div></div>
 }
 
 function NotFound() {

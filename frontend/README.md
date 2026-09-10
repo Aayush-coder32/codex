@@ -15,11 +15,13 @@ Create a production bundle with:
 npm run build
 ```
 
-## Demo roles
+## Authentication
 
-Open `/login` and choose Student, Faculty, Company or Admin. The fields are prefilled and no external account is required.
+Open `/signup`, choose Student, Faculty or Company, and create an account. Existing users sign in at `/login`; their role is loaded from the backend account.
 
-All data is mocked. Profile edits, projects, certificates, saved opportunities, applications, notifications, messages, employer job posts, applicant decisions, faculty workshops and admin announcements persist in the browser through `localStorage`.
+During development, Vite proxies `/api` requests to `http://127.0.0.1:5000`. Start the MongoDB-backed API before registering or signing in.
+
+Some dashboard content remains seeded for the interface, while authentication is no longer mocked or stored as a hardcoded local session.
 
 ## Main experiences
 
