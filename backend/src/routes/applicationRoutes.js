@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import * as applications from '../controllers/applicationController.js'
+import * as applications from '../db/controllers/applications.js'
 import { authenticate, authorize } from '../middleware/auth.js'
 import { validate } from '../middleware/validate.js'
 import { asyncHandler } from '../utils/asyncHandler.js'
