@@ -8,6 +8,9 @@
   "scripts": {
     "dev": "nodemon src/server.js",
     "start": "node src/server.js",
+    "db:migrate": "node scripts/migrate.js",
+    "db:check": "node scripts/db-check.js",
+    "db:setup": "npm run db:migrate && npm run seed",
     "seed": "node src/seed/index.js",
     "check": "node scripts/check.js",
     "test": "node --test --test-reporter=spec"
