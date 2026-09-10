@@ -3,9 +3,9 @@ import cors from 'cors'
 import helmet from 'helmet'
 import cookieParser from 'cookie-parser'
 import morgan from 'morgan'
-import mongoose from 'mongoose'
 import { rateLimit } from 'express-rate-limit'
 import { env } from './config/env.js'
+import { isDatabaseReady } from './config/database.js'
 import apiRoutes from './routes/index.js'
 import { errorHandler, notFound } from './middleware/error.js'
 import { requestId } from './middleware/requestId.js'
@@ -34,8 +34,8 @@ if (env.logLevel !== 'silent') {
 app.use('/api', rateLimit({ windowMs: 60 * 1000, limit: 300, standardHeaders: true, legacyHeaders: false }))
 app.get('/health/live', (_req, res) => res.json({ data: { status: 'ok', service: 'skillbridge-api' } }))
 app.get('/health/ready', (_req, res) => {
-  const ready = mongoose.connection.readyState === 1
-  res.status(ready ? 200 : 503).json({ data: { status: ready ? 'ready' : 'not-ready', database: mongoose.connection.readyState } })
+  const ready = isDatabaseReady()
+  res.status(ready ? 200 : 503).json({ data: { status: ready ? 'ready' : 'not-ready', database: ready ? 'connected' : 'disconnected' } })
 })
 app.use('/api/v1', apiRoutes)
 app.use(notFound)
