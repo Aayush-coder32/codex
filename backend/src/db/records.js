@@ -90,7 +90,7 @@ export function mapApplication(row, { opportunity, student } = {}) {
   }
 }
 
-export function mapWorkshop(row, { institution, createdBy } = {}) {
+export function mapWorkshop(row, { institution, createdBy, includeMeetingUrl = false } = {}) {
   if (!row) return null
   return {
     ...base(row), name: row.name, skill: row.skill, instructor: row.instructor,
@@ -98,7 +98,7 @@ export function mapWorkshop(row, { institution, createdBy } = {}) {
     createdBy: createdBy === undefined ? row.created_by : createdBy,
     startDate: row.start_date, duration: row.duration, capacity: row.capacity,
     enrolledCount: row.enrolled_count, description: row.description, mode: row.mode,
-    meetingUrl: row.meeting_url, status: row.status,
+    ...(includeMeetingUrl ? { meetingUrl: row.meeting_url } : {}), status: row.status,
   }
 }
 
