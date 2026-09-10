@@ -7,9 +7,10 @@ const role = z.enum(['student', 'faculty', 'company', 'admin'])
 const opportunityStatus = z.enum(['Draft', 'Active', 'Closed', 'Archived'])
 const applicationStatus = z.enum(['Applied', 'Under Review', 'Shortlisted', 'Interview', 'Selected', 'Rejected', 'Withdrawn'])
 
+const emptyBody = z.object({}).optional().default({})
 const emptyParams = z.object({}).passthrough()
 const emptyQuery = z.object({}).passthrough()
-const request = ({ body = z.object({}), params = emptyParams, query = emptyQuery }) => z.object({ body, params, query })
+const request = ({ body = emptyBody, params = emptyParams, query = emptyQuery }) => z.object({ body, params, query })
 
 export const registerSchema = request({ body: z.object({
   name: z.string().trim().min(2).max(100),

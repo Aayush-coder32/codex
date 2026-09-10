@@ -4,8 +4,13 @@ import { env } from './env.js'
 const { Pool } = pg
 let ready = false
 
+const databaseUrl = new URL(env.databaseUrl)
+if (['prefer', 'require', 'verify-ca'].includes(databaseUrl.searchParams.get('sslmode'))) {
+  databaseUrl.searchParams.set('sslmode', 'verify-full')
+}
+
 export const pool = new Pool({
-  connectionString: env.databaseUrl,
+  connectionString: databaseUrl.toString(),
   max: env.databasePoolSize,
   connectionTimeoutMillis: 10_000,
   idleTimeoutMillis: 30_000,
