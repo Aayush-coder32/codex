@@ -9,7 +9,11 @@ export const pool = new Pool({
   max: env.databasePoolSize,
   connectionTimeoutMillis: 10_000,
   idleTimeoutMillis: 30_000,
-  options: '-c search_path=skillbridge,public',
+})
+
+const configuredClients = new WeakMap()
+pool.on('connect', (client) => {
+  configuredClients.set(client, client.query('SET search_path TO skillbridge, public'))
 })
 
 pool.on('error', (error) => {
@@ -20,6 +24,7 @@ pool.on('error', (error) => {
 export async function connectDatabase() {
   const client = await pool.connect()
   try {
+    await configuredClients.get(client)
     const result = await client.query('SELECT current_database() AS database, current_schema() AS schema')
     ready = true
     console.info(`PostgreSQL connected: ${result.rows[0].database} (schema: ${result.rows[0].schema || 'public'})`)
@@ -34,11 +39,20 @@ export async function disconnectDatabase() {
 }
 
 export const isDatabaseReady = () => ready
-export const query = (text, values = []) => pool.query(text, values)
+export async function query(text, values = []) {
+  const client = await pool.connect()
+  try {
+    await configuredClients.get(client)
+    return await client.query(text, values)
+  } finally {
+    client.release()
+  }
+}
 
 export async function transaction(work) {
   const client = await pool.connect()
   try {
+    await configuredClients.get(client)
     await client.query('BEGIN')
     const result = await work(client)
     await client.query('COMMIT')
