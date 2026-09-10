@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import * as opportunities from '../controllers/opportunityController.js'
+import * as opportunities from '../db/controllers/opportunities.js'
 import { authenticate, authorize } from '../middleware/auth.js'
 import { validate } from '../middleware/validate.js'
 import { asyncHandler } from '../utils/asyncHandler.js'
