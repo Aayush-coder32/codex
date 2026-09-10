@@ -68,6 +68,8 @@ export function AuthProvider({ children }) {
   const logout = useCallback(async () => {
     try {
       await authRequest('logout')
+    } catch {
+      // Clear the browser session even if the API is temporarily unavailable.
     } finally {
       setSession(null)
     }
