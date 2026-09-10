@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import * as announcements from '../db/controllers/announcements.js'
+import * as announcements from '../controllers/announcementController.js'
 import { authenticate, authorize } from '../middleware/auth.js'
 import { validate } from '../middleware/validate.js'
 import { asyncHandler } from '../utils/asyncHandler.js'

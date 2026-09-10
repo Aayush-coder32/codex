@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import * as workshops from '../db/controllers/workshops.js'
+import * as workshops from '../controllers/workshopController.js'
 import { authenticate, authorize } from '../middleware/auth.js'
 import { validate } from '../middleware/validate.js'
 import { asyncHandler } from '../utils/asyncHandler.js'

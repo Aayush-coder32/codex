@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import * as institutions from '../db/controllers/institutions.js'
+import * as institutions from '../controllers/institutionController.js'
 import { authenticate, authorize } from '../middleware/auth.js'
 import { validate } from '../middleware/validate.js'
 import { asyncHandler } from '../utils/asyncHandler.js'

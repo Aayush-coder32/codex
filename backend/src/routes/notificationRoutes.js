@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import * as notifications from '../db/controllers/notifications.js'
+import * as notifications from '../controllers/notificationController.js'
 import { authenticate } from '../middleware/auth.js'
 import { validate } from '../middleware/validate.js'
 import { asyncHandler } from '../utils/asyncHandler.js'

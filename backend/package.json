@@ -8,11 +8,9 @@
   "scripts": {
     "dev": "nodemon src/server.js",
     "start": "node src/server.js",
-    "db:migrate": "node scripts/migrate.js",
     "db:check": "node scripts/db-check.js",
-    "db:setup": "npm run db:migrate && npm run seed",
-    "test:db": "node scripts/api-smoke.js",
-    "seed": "node scripts/seed.js",
+    "db:setup": "npm run seed",
+    "seed": "node src/seed/index.js",
     "check": "node scripts/check.js",
     "test": "node --test --test-reporter=spec"
   },
@@ -30,7 +28,7 @@
     "jsonwebtoken": "^9.0.2",
     "morgan": "^1.10.1",
     "multer": "^2.0.2",
-    "pg": "^8.23.0",
+    "mongoose": "^8.18.1",
     "zod": "^4.1.8"
   },
   "devDependencies": {

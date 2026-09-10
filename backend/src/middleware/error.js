@@ -20,20 +20,15 @@ export function errorHandler(error, req, res, _next) {
   } else if (error instanceof multer.MulterError) {
     status = error.code === 'LIMIT_FILE_SIZE' ? 413 : 400
     code = 'UPLOAD_ERROR'
-  } else if (error?.code === '23505') {
+  } else if (error?.name === 'CastError') {
+    status = 400
+    code = 'INVALID_ID'
+    message = 'The supplied resource id is invalid'
+  } else if (error?.code === 11000) {
     status = 409
     code = 'DUPLICATE_RESOURCE'
     message = 'A resource with those unique fields already exists'
-    details = error.detail
-  } else if (error?.code === '23503') {
-    status = 422
-    code = 'INVALID_REFERENCE'
-    message = 'A referenced resource does not exist'
-    details = error.detail
-  } else if (error?.code === '22P02') {
-    status = 400
-    code = 'INVALID_VALUE'
-    message = 'A supplied value has an invalid format'
+    details = error.keyValue
   }
 
   if (status >= 500) console.error(`[${req.id}]`, error)

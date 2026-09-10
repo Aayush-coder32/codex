@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import * as users from '../db/controllers/users.js'
+import * as users from '../controllers/userController.js'
 import { authenticate, authorize } from '../middleware/auth.js'
 import { resumeUpload } from '../middleware/upload.js'
 import { validate } from '../middleware/validate.js'
