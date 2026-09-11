@@ -312,11 +312,11 @@ export function Signup() {
     setLoading(true)
     try {
       const details = {
-        name: form.get('name'),
-        email: form.get('email'),
-        password: form.get('password'),
-        role: selectedRole,
-        ...(selectedRole === 'company' ? { organizationName: form.get('organizationName') } : {}),
+        name: String(form.get('name') || '').trim(),
+        email: String(form.get('email') || '').trim().toLowerCase(),
+        password: String(form.get('password') || ''),
+        role: String(selectedRole || '').trim().toLowerCase(),
+        ...(selectedRole === 'company' ? { organizationName: String(form.get('organizationName') || '').trim() } : {}),
       }
       const session = await register(details)
       toast('Your SkillBridge account is ready')

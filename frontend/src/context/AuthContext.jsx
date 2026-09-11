@@ -18,7 +18,12 @@ async function authRequest(path, { method = 'POST', body } = {}) {
   }
 
   const payload = response.status === 204 ? null : await response.json().catch(() => null)
-  if (!response.ok) throw new Error(payload?.error?.message || 'The request could not be completed.')
+  if (!response.ok) {
+    const details = Array.isArray(payload?.error?.details)
+      ? payload.error.details.map((item) => item.path?.join('.') || item.message).filter(Boolean).join(', ')
+      : ''
+    throw new Error(details ? `${payload?.error?.message || 'The request could not be completed.'} (${details})` : payload?.error?.message || 'The request could not be completed.')
+  }
   return payload?.data
 }
 
