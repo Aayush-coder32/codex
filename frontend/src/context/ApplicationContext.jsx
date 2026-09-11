@@ -22,7 +22,7 @@ export function ApplicationProvider({ children }) {
     const newJob = { ...job, id: `posted-${Date.now()}`, companyId: 'infosys', match: 84, posted: draft ? 'Draft' : 'Just now', skills: job.requiredSkills?.split(',').map((x) => x.trim()).filter(Boolean) || [], pay: job.pay || 'Competitive', mode: job.mode || 'Hybrid', type: job.type || 'Job', responsibilities: job.responsibilities?.split('\n').filter(Boolean) || [], status: draft ? 'Draft' : 'Active' }
     setPosted((items) => [newJob, ...items]); return newJob
   }
-  const updateApplicant = (id, status) => setApplicants((items) => items.map((item) => item.id === id ? { ...item, status } : item))
+  const updateApplicant = (id, status, details) => setApplicants((items) => items.map((item) => item.id === id ? { ...item, status, ...(details ? { interview: details } : {}) } : item))
   return <ApplicationContext.Provider value={{ applications, saved, posted, applicants, opportunities, apply, toggleSave, publish, updateApplicant }}>{children}</ApplicationContext.Provider>
 }
 
