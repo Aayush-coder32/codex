@@ -45,8 +45,8 @@ export async function register(req, res) {
 }
 
 export async function login(req, res) {
-  const { email, password } = req.validated.body
-  const user = await User.findOne({ email }).select('+passwordHash')
+  const { email, password, role } = req.validated.body
+  const user = await User.findOne({ email, ...(role ? { role } : {}) }).select('+passwordHash')
   if (!user || !(await bcrypt.compare(password, user.passwordHash))) {
     throw new ApiError(401, 'Email or password is incorrect', 'INVALID_CREDENTIALS')
   }

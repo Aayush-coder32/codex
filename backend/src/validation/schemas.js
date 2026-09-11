@@ -20,7 +20,11 @@ export const registerSchema = request({ body: z.object({
   organizationName: z.string().trim().min(2).max(160).optional(),
 }) })
 
-export const loginSchema = request({ body: z.object({ email, password: z.string().min(1).max(72) }) })
+export const loginSchema = request({ body: z.object({
+  email,
+  password: z.string().min(1).max(72),
+  role: role.optional(),
+}) })
 export const forgotPasswordSchema = request({ body: z.object({ email }) })
 export const resetPasswordSchema = request({ body: z.object({ token: z.string().min(20), password }) })
 export const changePasswordSchema = request({ body: z.object({ currentPassword: z.string().min(1), newPassword: password }) })
