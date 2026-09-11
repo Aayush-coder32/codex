@@ -16,7 +16,7 @@ export const registerSchema = request({ body: z.object({
   name: z.string().trim().min(2).max(100),
   email,
   password,
-  role: role.exclude(['admin']),
+  role,
   organizationName: z.string().trim().min(2).max(160).optional(),
 }) })
 
