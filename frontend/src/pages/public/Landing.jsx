@@ -233,13 +233,60 @@ export default function Landing() {
 
             <div className="mt-9 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
               {audienceCards.map(({ id, icon: Icon, title, text, className, iconClass }) => (
-                <article id={id} key={id} className={`group flex min-h-[245px] flex-col rounded-2xl p-6 transition duration-300 hover:-translate-y-1 hover:shadow-xl ${className}`}>
+                <article key={id} className={`group flex min-h-[245px] flex-col rounded-2xl p-6 transition duration-300 hover:-translate-y-1 hover:shadow-xl ${className}`}>
                   <span className={`grid h-12 w-12 place-items-center rounded-xl ${iconClass}`}><Icon size={26} /></span>
                   <h3 className="mt-5 text-xl font-extrabold text-[#102044]">{title}</h3>
                   <p className="mt-2 text-[14px] leading-6 text-slate-600">{text}</p>
-                  <a href={id === 'students' ? '/signup' : `#${id}`} className="mt-auto inline-flex items-center gap-2 pt-5 text-sm font-extrabold text-[#173c77]">Know More <ArrowRight size={16} className="transition group-hover:translate-x-1" /></a>
+                  <a href={`#${id}`} className="mt-auto inline-flex items-center gap-2 pt-5 text-sm font-extrabold text-[#173c77]">Know More <ArrowRight size={16} className="transition group-hover:translate-x-1" /></a>
                 </article>
               ))}
+            </div>
+
+            <div className="mt-10 space-y-6">
+              <article id="students" className="scroll-mt-24 overflow-hidden rounded-2xl border border-sky-100 bg-[#f4faff] shadow-sm">
+                <div className="grid items-stretch lg:grid-cols-[.9fr_1.1fr]">
+                  <div className="relative min-h-[240px] overflow-hidden">
+                    <img src={heroImage} alt="Students collaborating on a campus project" className="absolute inset-0 h-full w-full object-cover object-[65%_center]" />
+                    <div className="absolute inset-0 bg-gradient-to-r from-sky-950/10 to-sky-950/55" />
+                  </div>
+                  <div className="flex flex-col justify-center p-7 sm:p-9">
+                    <p className="text-xs font-extrabold uppercase tracking-[.18em] text-sky-600">For Students</p>
+                    <h3 className="mt-2 text-2xl font-extrabold text-[#102044]">Turn your potential into a career path.</h3>
+                    <p className="mt-3 max-w-xl text-sm leading-6 text-slate-600">Create a skill-first profile, discover internships matched to your strengths, follow a practical learning roadmap and apply with confidence.</p>
+                    <Link to="/signup" className="mt-5 inline-flex w-fit items-center gap-2 rounded-lg bg-[#102044] px-5 py-3 text-xs font-extrabold text-white transition hover:bg-[#173c77]">Create your profile <ArrowRight size={15} /></Link>
+                  </div>
+                </div>
+              </article>
+
+              <article id="institutions" className="scroll-mt-24 overflow-hidden rounded-2xl border border-rose-100 bg-[#fff9f5] shadow-sm">
+                <div className="grid items-stretch lg:grid-cols-[1.1fr_.9fr]">
+                  <div className="flex flex-col justify-center p-7 sm:p-9 lg:order-first">
+                    <p className="text-xs font-extrabold uppercase tracking-[.18em] text-rose-600">For Institutions</p>
+                    <h3 className="mt-2 text-2xl font-extrabold text-[#102044]">Make student outcomes visible.</h3>
+                    <p className="mt-3 max-w-xl text-sm leading-6 text-slate-600">Bring students, faculty and employers into one connected workspace. Track readiness, identify skill gaps and build programs around real industry demand.</p>
+                    <Link to="/signup" className="mt-5 inline-flex w-fit items-center gap-2 rounded-lg bg-[#a9575d] px-5 py-3 text-xs font-extrabold text-white transition hover:bg-[#8f454d]">Build your institution network <ArrowRight size={15} /></Link>
+                  </div>
+                  <div className="relative min-h-[240px] overflow-hidden lg:order-last">
+                    <img src={impactImage} alt="Graduate representing institutional impact" className="absolute inset-0 h-full w-full object-cover object-center" />
+                    <div className="absolute inset-0 bg-gradient-to-l from-rose-950/10 to-rose-950/55" />
+                  </div>
+                </div>
+              </article>
+
+              <article id="industry" className="scroll-mt-24 overflow-hidden rounded-2xl border border-emerald-100 bg-[#f3fcf7] shadow-sm">
+                <div className="grid items-stretch lg:grid-cols-[.9fr_1.1fr]">
+                  <div className="relative min-h-[240px] overflow-hidden">
+                    <img src={heroImage} alt="Industry and academic partners working together" className="absolute inset-0 h-full w-full object-cover object-[38%_center]" />
+                    <div className="absolute inset-0 bg-gradient-to-r from-emerald-950/10 to-emerald-950/60" />
+                  </div>
+                  <div className="flex flex-col justify-center p-7 sm:p-9">
+                    <p className="text-xs font-extrabold uppercase tracking-[.18em] text-emerald-600">For Industry</p>
+                    <h3 className="mt-2 text-2xl font-extrabold text-[#102044]">Meet talent before the hiring rush.</h3>
+                    <p className="mt-3 max-w-xl text-sm leading-6 text-slate-600">Publish opportunities, search verified skill profiles, mentor practical projects and build long-term partnerships with academic communities.</p>
+                    <Link to="/signup" className="mt-5 inline-flex w-fit items-center gap-2 rounded-lg bg-emerald-600 px-5 py-3 text-xs font-extrabold text-white transition hover:bg-emerald-700">Join the partner network <ArrowRight size={15} /></Link>
+                  </div>
+                </div>
+              </article>
             </div>
           </div>
         </section>
