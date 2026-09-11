@@ -29,6 +29,7 @@ const signupOptions = [
   { role: 'student', icon: GraduationCap, title: 'Student', text: 'Find internships, jobs and grow your skills.', color: 'bg-blue-50 text-blue-600' },
   { role: 'faculty', icon: Landmark, title: 'Faculty / Academia', text: 'Track student progress and collaborate with industry.', color: 'bg-violet-50 text-violet-600' },
   { role: 'company', icon: Building2, title: 'Industry / Company', text: 'Post opportunities and hire top talent.', color: 'bg-emerald-50 text-emerald-600' },
+  { role: 'admin', icon: ShieldCheck, title: 'Administrator', text: 'Manage institutions, partners, users and platform insights.', color: 'bg-amber-50 text-amber-600' },
 ]
 
 const loginRoles = [
