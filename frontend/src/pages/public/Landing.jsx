@@ -2,7 +2,9 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import {
   ArrowRight,
+  ArrowUpRight,
   BarChart3,
+  BookOpen,
   BriefcaseBusiness,
   Check,
   CirclePlay,
@@ -11,12 +13,17 @@ import {
   Handshake,
   Instagram,
   Landmark,
+  Mail,
+  MapPin,
   Linkedin,
   Menu,
   Rocket,
   Sparkles,
   TrendingUp,
   Twitter,
+  Phone,
+  FileText,
+  Video,
   UsersRound,
   X,
   Youtube,
@@ -31,7 +38,7 @@ const navItems = [
   ['For Students', 'students'],
   ['For Institutions', 'institutions'],
   ['For Industry', 'industry'],
-  ['Resources', 'impact'],
+  ['Resources', 'resources'],
   ['Contact', 'contact'],
 ]
 
@@ -291,7 +298,7 @@ export default function Landing() {
           </div>
         </section>
 
-        <section id="impact" className="relative overflow-hidden bg-[#061d29] py-10 text-white sm:py-12">
+        <section id="resources" className="relative overflow-hidden bg-[#061d29] py-10 text-white sm:py-12">
           <img src={impactImage} alt="Graduate celebrating on a mountain peak" className="absolute inset-0 h-full w-full object-cover object-center opacity-60" />
           <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(4,27,37,.98)_0%,rgba(4,27,37,.79)_50%,rgba(4,27,37,.4)_100%)]" />
           <div className="relative mx-auto grid max-w-[1180px] gap-9 px-5 lg:grid-cols-[1.1fr_2.4fr_auto] lg:items-center lg:px-8">
@@ -316,9 +323,75 @@ export default function Landing() {
             </Link>
           </div>
         </section>
+
+        <section className="border-b border-slate-200 bg-[#f7faf9] py-14 sm:py-16">
+          <div className="mx-auto max-w-[1180px] px-5 lg:px-8">
+            <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
+              <div>
+                <p className="text-xs font-extrabold uppercase tracking-[.18em] text-emerald-600">Resource centre</p>
+                <h2 className="mt-2 max-w-2xl text-3xl font-extrabold tracking-[-.035em] text-[#102044] sm:text-[36px]">Practical tools for every stage of the journey.</h2>
+                <p className="mt-3 max-w-2xl text-sm leading-6 text-slate-500">Move from ambition to measurable progress with curated guides, hiring intelligence and programs built around real outcomes.</p>
+              </div>
+              <Link to="/opportunities" className="inline-flex w-fit items-center gap-2 text-sm font-extrabold text-[#173c77]">Explore opportunities <ArrowUpRight size={17} /></Link>
+            </div>
+
+            <div className="mt-8 grid gap-4 md:grid-cols-3">
+              {[
+                { icon: BookOpen, tag: 'Learn', title: 'Career playbooks', text: 'Structured guides for profile building, interview readiness and skill-first career planning.', action: 'Browse learning paths' },
+                { icon: BarChart3, tag: 'Understand', title: 'Industry intelligence', text: 'See the skills, roles and opportunity signals shaping the next generation of work.', action: 'View market insights' },
+                { icon: FileText, tag: 'Build', title: 'Partner toolkit', text: 'Templates for internships, campus programs, mentorships and outcome-led collaborations.', action: 'Open toolkit' },
+              ].map(({ icon: Icon, tag, title, text, action }) => (
+                <article key={title} className="group rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:border-emerald-200 hover:shadow-lg">
+                  <div className="flex items-start justify-between"><span className="grid h-11 w-11 place-items-center rounded-xl bg-emerald-50 text-emerald-600"><Icon size={22} /></span><span className="text-[10px] font-extrabold uppercase tracking-[.16em] text-slate-400">{tag}</span></div>
+                  <h3 className="mt-6 text-lg font-extrabold text-[#102044]">{title}</h3>
+                  <p className="mt-2 min-h-[72px] text-sm leading-6 text-slate-500">{text}</p>
+                  <a href="#contact" className="mt-5 inline-flex items-center gap-2 text-xs font-extrabold text-[#173c77]">{action} <ArrowRight size={14} className="transition group-hover:translate-x-1" /></a>
+                </article>
+              ))}
+            </div>
+
+            <div className="mt-7 grid overflow-hidden rounded-2xl bg-[#102044] lg:grid-cols-[1.1fr_.9fr]">
+              <div className="p-7 sm:p-9">
+                <span className="inline-flex items-center gap-2 text-xs font-bold text-emerald-300"><Video size={15} /> Monthly community sessions</span>
+                <h3 className="mt-4 text-2xl font-extrabold text-white">Learn directly from people doing the work.</h3>
+                <p className="mt-3 max-w-xl text-sm leading-6 text-slate-300">Join conversations with hiring leaders, faculty innovators and students building meaningful projects across India.</p>
+                <a href="#contact" className="mt-5 inline-flex items-center gap-2 rounded-lg bg-emerald-300 px-5 py-3 text-xs font-extrabold text-[#07313a] transition hover:bg-emerald-200">Get session updates <ArrowRight size={15} /></a>
+              </div>
+              <div className="relative min-h-[220px] overflow-hidden">
+                <img src={impactImage} alt="Community members learning together" className="absolute inset-0 h-full w-full object-cover object-center opacity-80" />
+                <div className="absolute inset-0 bg-gradient-to-r from-[#102044] via-[#102044]/20 to-transparent" />
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="contact" className="bg-white py-14 sm:py-16">
+          <div className="mx-auto grid max-w-[1180px] gap-10 px-5 lg:grid-cols-[.8fr_1.2fr] lg:px-8">
+            <div>
+              <p className="text-xs font-extrabold uppercase tracking-[.18em] text-emerald-600">Start a conversation</p>
+              <h2 className="mt-2 text-3xl font-extrabold tracking-[-.035em] text-[#102044] sm:text-[38px]">Let’s build the right bridge.</h2>
+              <p className="mt-4 max-w-md text-sm leading-6 text-slate-500">Whether you are hiring, building a campus program or looking for your next opportunity, our team will help you find the right starting point.</p>
+              <div className="mt-7 space-y-4">
+                <a href="mailto:hello@skillbridge.demo" className="flex items-center gap-3 text-sm font-semibold text-[#102044] hover:text-emerald-600"><span className="grid h-10 w-10 place-items-center rounded-xl bg-emerald-50 text-emerald-600"><Mail size={18} /></span>hello@skillbridge.demo</a>
+                <a href="tel:+911180012345" className="flex items-center gap-3 text-sm font-semibold text-[#102044] hover:text-emerald-600"><span className="grid h-10 w-10 place-items-center rounded-xl bg-sky-50 text-sky-600"><Phone size={18} /></span>+91 11 8001 2345</a>
+                <div className="flex items-center gap-3 text-sm font-semibold text-[#102044]"><span className="grid h-10 w-10 place-items-center rounded-xl bg-rose-50 text-rose-600"><MapPin size={18} /></span>New Delhi · Bengaluru · Remote</div>
+              </div>
+            </div>
+
+            <form className="rounded-2xl border border-slate-200 bg-[#f8fafc] p-6 shadow-sm sm:p-8" onSubmit={(event) => event.preventDefault()}>
+              <div className="grid gap-4 sm:grid-cols-2">
+                <label className="text-xs font-bold text-[#102044]">Your name<input required className="mt-2 h-11 w-full rounded-lg border border-slate-200 bg-white px-3 text-sm font-normal outline-none transition focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100" placeholder="Full name" /></label>
+                <label className="text-xs font-bold text-[#102044]">Work email<input required type="email" className="mt-2 h-11 w-full rounded-lg border border-slate-200 bg-white px-3 text-sm font-normal outline-none transition focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100" placeholder="you@company.com" /></label>
+                <label className="text-xs font-bold text-[#102044] sm:col-span-2">I am looking to<select className="mt-2 h-11 w-full rounded-lg border border-slate-200 bg-white px-3 text-sm font-normal outline-none transition focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100"><option>Hire skilled talent</option><option>Build an institution program</option><option>Find learning opportunities</option><option>Partner on a project</option></select></label>
+                <label className="text-xs font-bold text-[#102044] sm:col-span-2">Tell us about your goal<textarea required rows="4" className="mt-2 w-full resize-none rounded-lg border border-slate-200 bg-white p-3 text-sm font-normal outline-none transition focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100" placeholder="A little context helps us route your enquiry faster." /></label>
+              </div>
+              <button type="submit" className="mt-5 inline-flex h-11 items-center gap-2 rounded-lg bg-[#102044] px-6 text-xs font-extrabold text-white transition hover:bg-[#173c77]">Send enquiry <ArrowRight size={15} /></button>
+            </form>
+          </div>
+        </section>
       </main>
 
-      <footer id="contact" className="bg-[#0a2430] text-white">
+      <footer className="bg-[#0a2430] text-white">
         <div className="mx-auto flex max-w-[1180px] flex-col gap-8 px-5 py-7 lg:flex-row lg:items-center lg:justify-between lg:px-8">
           <Brand />
           <nav className="flex flex-wrap gap-x-7 gap-y-2 text-[11px] font-semibold text-slate-300" aria-label="Footer navigation">
