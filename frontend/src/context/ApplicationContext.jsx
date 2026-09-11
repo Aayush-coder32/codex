@@ -26,10 +26,12 @@ export function ApplicationProvider({ children }) {
   const updateApplicant = (id, status, details) => setApplicants((items) => items.map((item) => item.id === id ? { ...item, status, ...(details ? { interview: details } : {}) } : item))
   const addApplicant = (applicant) => setApplicants((items) => [{ ...applicant, id: `cand-${Date.now()}`, date: new Date().toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' }), status: applicant.status || 'New' }, ...items])
   const removeApplicant = (id) => setApplicants((items) => items.filter((item) => item.id !== id))
+  const updateApplication = (id, details) => setApplications((items) => items.map((item) => item.id === id ? { ...item, ...details } : item))
+  const removeApplication = (id) => setApplications((items) => items.filter((item) => item.id !== id))
   const addTalent = (candidate) => setTalent((items) => [{ ...candidate, id: `talent-${Date.now()}`, initials: candidate.name.split(/\s+/).filter(Boolean).slice(0, 2).map((part) => part[0].toUpperCase()).join('') }, ...items])
   const removeTalent = (id) => setTalent((items) => items.filter((item) => item.id !== id))
   const approveApplication = (id) => setApplications((items) => items.map((item) => item.id === id ? { ...item, status: 'Selected' } : item))
-  return <ApplicationContext.Provider value={{ applications, saved, posted, applicants, talent, opportunities, apply, toggleSave, publish, updateApplicant, addApplicant, removeApplicant, addTalent, removeTalent, approveApplication }}>{children}</ApplicationContext.Provider>
+  return <ApplicationContext.Provider value={{ applications, saved, posted, applicants, talent, opportunities, apply, toggleSave, publish, updateApplication, removeApplication, updateApplicant, addApplicant, removeApplicant, addTalent, removeTalent, approveApplication }}>{children}</ApplicationContext.Provider>
 }
 
 export const useApplications = () => useContext(ApplicationContext)
