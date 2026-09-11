@@ -3,6 +3,8 @@ import { useLocalStorage } from '../hooks/useLocalStorage'
 import { initialWorkshops } from '../data/workshops'
 import { initialConversations } from '../data/messages'
 
+const initialStudents = []
+
 const UserContext = createContext(null)
 
 const defaultProfile = {
@@ -28,6 +30,7 @@ export function UserProvider({ children }) {
   const [projects, setProjects] = useLocalStorage('skillbridge_projects', defaultProjects)
   const [certificates, setCertificates] = useLocalStorage('skillbridge_certificates', defaultCertificates)
   const [workshops, setWorkshops] = useLocalStorage('skillbridge_workshops', initialWorkshops)
+  const [students, setStudents] = useLocalStorage('skillbridge_students', initialStudents)
   const [conversations, setConversations] = useLocalStorage('skillbridge_messages', initialConversations)
   const [toasts, setToasts] = useState([])
 
@@ -41,7 +44,7 @@ export function UserProvider({ children }) {
   const remove = (setter, id) => setter((items) => items.filter((item) => item.id !== id))
   const sendMessage = (conversationId, text) => setConversations((items) => items.map((item) => item.id === conversationId ? { ...item, messages: [...item.messages, { id: Date.now(), from: 'me', text, time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) }] } : item))
 
-  const value = { profile, setProfile, projects, upsertProject: (x) => upsert(setProjects, x), removeProject: (id) => remove(setProjects, id), certificates, upsertCertificate: (x) => upsert(setCertificates, x), removeCertificate: (id) => remove(setCertificates, id), workshops, addWorkshop: (x) => upsert(setWorkshops, x), conversations, sendMessage, toasts, toast }
+  const value = { profile, setProfile, projects, upsertProject: (x) => upsert(setProjects, x), removeProject: (id) => remove(setProjects, id), certificates, upsertCertificate: (x) => upsert(setCertificates, x), removeCertificate: (id) => remove(setCertificates, id), workshops, addWorkshop: (x) => upsert(setWorkshops, x), students, addStudent: (x) => upsert(setStudents, x), conversations, sendMessage, toasts, toast }
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>
 }
 
