@@ -10,6 +10,7 @@ export function ApplicationProvider({ children }) {
   const [saved, setSaved] = useLocalStorage('skillbridge_saved', ['opp-3'])
   const [posted, setPosted] = useLocalStorage('skillbridge_posted_jobs', [])
   const [applicants, setApplicants] = useLocalStorage('skillbridge_applicants_v2', [])
+  const [talent, setTalent] = useLocalStorage('skillbridge_company_talent_v1', [])
   const opportunities = [...posted, ...seedOpportunities]
 
   const apply = (opportunity) => {
@@ -25,8 +26,10 @@ export function ApplicationProvider({ children }) {
   const updateApplicant = (id, status, details) => setApplicants((items) => items.map((item) => item.id === id ? { ...item, status, ...(details ? { interview: details } : {}) } : item))
   const addApplicant = (applicant) => setApplicants((items) => [{ ...applicant, id: `cand-${Date.now()}`, date: new Date().toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' }), status: applicant.status || 'New' }, ...items])
   const removeApplicant = (id) => setApplicants((items) => items.filter((item) => item.id !== id))
+  const addTalent = (candidate) => setTalent((items) => [{ ...candidate, id: `talent-${Date.now()}`, initials: candidate.name.split(/\s+/).filter(Boolean).slice(0, 2).map((part) => part[0].toUpperCase()).join('') }, ...items])
+  const removeTalent = (id) => setTalent((items) => items.filter((item) => item.id !== id))
   const approveApplication = (id) => setApplications((items) => items.map((item) => item.id === id ? { ...item, status: 'Selected' } : item))
-  return <ApplicationContext.Provider value={{ applications, saved, posted, applicants, opportunities, apply, toggleSave, publish, updateApplicant, addApplicant, removeApplicant, approveApplication }}>{children}</ApplicationContext.Provider>
+  return <ApplicationContext.Provider value={{ applications, saved, posted, applicants, talent, opportunities, apply, toggleSave, publish, updateApplicant, addApplicant, removeApplicant, addTalent, removeTalent, approveApplication }}>{children}</ApplicationContext.Provider>
 }
 
 export const useApplications = () => useContext(ApplicationContext)
