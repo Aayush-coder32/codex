@@ -191,9 +191,13 @@ export function Login() {
     setError('')
     const form = new FormData(event.currentTarget)
     try {
-      const session = await login({ email: form.get('email'), password: form.get('password') })
+      const session = await login({
+        email: form.get('email'),
+        password: form.get('password'),
+        role: selectedRole,
+      })
       toast(`Welcome back, ${session.user.name}`)
-      navigate(homeFor(session.role))
+      navigate(homeFor(session.role), { replace: true })
     } catch (requestError) {
       setError(requestError.message)
     } finally {
