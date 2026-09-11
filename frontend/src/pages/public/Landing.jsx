@@ -298,7 +298,7 @@ export default function Landing() {
           </div>
         </section>
 
-        <section id="resources" className="relative overflow-hidden bg-[#061d29] py-10 text-white sm:py-12">
+        <section id="impact" className="relative overflow-hidden bg-[#061d29] py-10 text-white sm:py-12">
           <img src={impactImage} alt="Graduate celebrating on a mountain peak" className="absolute inset-0 h-full w-full object-cover object-center opacity-60" />
           <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(4,27,37,.98)_0%,rgba(4,27,37,.79)_50%,rgba(4,27,37,.4)_100%)]" />
           <div className="relative mx-auto grid max-w-[1180px] gap-9 px-5 lg:grid-cols-[1.1fr_2.4fr_auto] lg:items-center lg:px-8">
@@ -324,7 +324,7 @@ export default function Landing() {
           </div>
         </section>
 
-        <section className="border-b border-slate-200 bg-[#f7faf9] py-14 sm:py-16">
+        <section id="resources" className="border-b border-slate-200 bg-[#f7faf9] py-14 sm:py-16">
           <div className="mx-auto max-w-[1180px] px-5 lg:px-8">
             <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
               <div>
