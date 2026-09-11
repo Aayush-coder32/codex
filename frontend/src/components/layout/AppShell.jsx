@@ -17,7 +17,7 @@ const navs = {
     ['Dashboard','/company/dashboard',LayoutDashboard],['Post Opportunity','/company/post-opportunity',PlusSquare],['Manage Opportunities','/company/opportunities',BriefcaseBusiness],['Applications','/company/applications',ClipboardList],['Find Students','/company/students',Search],['Analytics','/company/analytics',ChartNoAxesCombined],['Messages','/company/messages',MessageSquare],['Company Profile','/company/profile',Building2],['Settings','/company/settings',Settings],
   ],
   admin: [
-    ['Dashboard','/admin/dashboard',LayoutDashboard],['Institutions','/admin/institutions',Landmark],['Industry Partners','/admin/companies',Building2],['Students','/admin/students',UsersRound],['Opportunities','/admin/opportunities',BriefcaseBusiness],['Reports','/admin/reports',FileChartColumn],['Announcements','/admin/announcements',Megaphone],['Settings','/admin/settings',Settings],
+    ['Dashboard','/admin/dashboard',LayoutDashboard],['Institutions','/admin/institutions',Landmark],['Industry Partners','/admin/companies',Building2],['Students','/admin/students',UsersRound],['Opportunities','/admin/opportunities',BriefcaseBusiness],['Applications','/admin/applications',ClipboardList],['Reports','/admin/reports',FileChartColumn],['Announcements','/admin/announcements',Megaphone],['Settings','/admin/settings',Settings],
   ],
 }
 

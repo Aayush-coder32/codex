@@ -7,7 +7,7 @@ import { useAuth } from './context/AuthContext'
 import { StudentDashboard, StudentProfile, SkillAnalysis, StudentRoadmap, StudentOpportunities, OpportunityDetails, StudentApplications, ProjectsPage, CertificatesPage } from './pages/student/StudentPages'
 import { FacultyAnalytics, FacultyCollaboration, FacultyDashboard, FacultyReports, FacultyStudents, FacultyTraining } from './pages/faculty/FacultyPages'
 import { CompanyAnalytics, CompanyApplications, CompanyDashboard, CompanyProfile, FindStudents, ManageOpportunities, PostOpportunity } from './pages/company/CompanyPages'
-import { AdminAnnouncements, AdminCompanies, AdminDashboard, AdminInstitutions, AdminOpportunities, AdminReports, AdminStudents } from './pages/admin/AdminPages'
+import { AdminAnnouncements, AdminApplications, AdminCompanies, AdminDashboard, AdminInstitutions, AdminOpportunities, AdminReports, AdminStudents } from './pages/admin/AdminPages'
 import { MessagesPage, NotificationsPage, SettingsPage } from './pages/shared/SharedPages'
 import { EmptyState, ToastHost } from './components/common/UI'
 import { Compass } from 'lucide-react'
@@ -88,6 +88,7 @@ export default function App() {
       <Route path="/admin/companies" element={<AdminCompanies/>}/>
       <Route path="/admin/students" element={<AdminStudents/>}/>
       <Route path="/admin/opportunities" element={<AdminOpportunities/>}/>
+      <Route path="/admin/applications" element={<AdminApplications/>}/>
       <Route path="/admin/reports" element={<AdminReports/>}/>
       <Route path="/admin/announcements" element={<AdminAnnouncements/>}/>
       <Route path="/admin/settings" element={<SettingsPage/>}/>

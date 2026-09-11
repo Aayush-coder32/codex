@@ -29,3 +29,89 @@ button { -webkit-tap-highlight-color: transparent; }
 @keyframes enter { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 .animate-toast { animation: toast .28s ease-out both; }
 @keyframes toast { from { opacity: 0; transform: translateX(16px); } to { opacity: 1; transform: translateX(0); } }
+
+/* Student profile identity panel */
+main:has(> section.card.overflow-hidden > div:first-child.h-28) > section.card.overflow-hidden {
+  overflow: visible;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+main:has(> section.card.overflow-hidden > div:first-child.h-28) > section.card.overflow-hidden > div:first-child {
+  position: relative;
+  overflow: hidden;
+  height: 9rem;
+  border-radius: 1.25rem 1.25rem 0.75rem 0.75rem;
+  background-image: linear-gradient(115deg, rgba(10, 30, 72, .98), rgba(30, 95, 190, .92)), linear-gradient(rgba(255,255,255,.08) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.08) 1px, transparent 1px);
+  background-size: auto, 28px 28px, 28px 28px;
+  box-shadow: 0 18px 35px rgba(30, 64, 175, .16);
+}
+main:has(> section.card.overflow-hidden > div:first-child.h-28) > section.card.overflow-hidden > div:first-child::after {
+  position: absolute;
+  right: 8%;
+  top: -5rem;
+  width: 15rem;
+  height: 15rem;
+  border: 1px solid rgba(255,255,255,.2);
+  border-radius: 999px;
+  content: '';
+  box-shadow: 0 0 0 2rem rgba(255,255,255,.04), 0 0 0 4rem rgba(255,255,255,.025);
+}
+main:has(> section.card.overflow-hidden > div:first-child.h-28) > section.card.overflow-hidden > div:nth-child(2) {
+  position: relative;
+  z-index: 1;
+  margin: -1.5rem .75rem 0;
+  border: 1px solid rgba(203, 213, 225, .85);
+  border-radius: 1rem;
+  background: rgba(255,255,255,.98);
+  box-shadow: 0 12px 30px rgba(15, 23, 42, .08);
+}
+main:has(> section.card.overflow-hidden > div:first-child.h-28) > section.card.overflow-hidden > div:nth-child(2) > div:first-child {
+  padding: 1.25rem 1.5rem 1.5rem;
+}
+main:has(> section.card.overflow-hidden > div:first-child.h-28) > section.card.overflow-hidden > div:nth-child(2) > div:first-child > div:first-child {
+  gap: 1rem;
+}
+main:has(> section.card.overflow-hidden > div:first-child.h-28) > section.card.overflow-hidden > div:nth-child(2) > div:last-child {
+  border-top-color: #edf1f7;
+  padding-inline: .75rem;
+}
+main:has(> section.card.overflow-hidden > div:first-child.h-28) > section.card.overflow-hidden + section.card {
+  border-color: #e2e8f0;
+  box-shadow: 0 10px 28px rgba(15, 23, 42, .055);
+}
+
+@media (max-width: 640px) {
+  main:has(> section.card.overflow-hidden > div:first-child.h-28) > section.card.overflow-hidden > div:nth-child(2) {
+    margin-inline: 0;
+  }
+  main:has(> section.card.overflow-hidden > div:first-child.h-28) > section.card.overflow-hidden > div:nth-child(2) > div:first-child {
+    padding-inline: 1rem;
+  }
+}
+
+/* Keep wide directory tables and pagination in separate paint layers. */
+main:has(table[class*="min-w-[980px]"]) section.card.mt-5 {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+main:has(table[class*="min-w-[980px]"]) section.card.mt-5 > div:first-child {
+  position: relative;
+  z-index: 0;
+  overflow-x: auto;
+  background: #fff;
+}
+main:has(table[class*="min-w-[980px]"]) section.card.mt-5 > div:last-child {
+  position: relative;
+  z-index: 2;
+  margin-top: 0;
+  border-top: 1px solid #e2e8f0;
+  background: #fff;
+  padding-top: 1rem;
+}
+main:has(table[class*="min-w-[980px]"]) section.card.mt-5 tbody tr {
+  position: relative;
+  z-index: 0;
+  min-height: 4.5rem;
+}

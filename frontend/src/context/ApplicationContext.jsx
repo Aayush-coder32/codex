@@ -23,7 +23,8 @@ export function ApplicationProvider({ children }) {
     setPosted((items) => [newJob, ...items]); return newJob
   }
   const updateApplicant = (id, status, details) => setApplicants((items) => items.map((item) => item.id === id ? { ...item, status, ...(details ? { interview: details } : {}) } : item))
-  return <ApplicationContext.Provider value={{ applications, saved, posted, applicants, opportunities, apply, toggleSave, publish, updateApplicant }}>{children}</ApplicationContext.Provider>
+  const approveApplication = (id) => setApplications((items) => items.map((item) => item.id === id ? { ...item, status: 'Selected' } : item))
+  return <ApplicationContext.Provider value={{ applications, saved, posted, applicants, opportunities, apply, toggleSave, publish, updateApplicant, approveApplication }}>{children}</ApplicationContext.Provider>
 }
 
 export const useApplications = () => useContext(ApplicationContext)
