@@ -6,7 +6,6 @@ import { departmentSkills, participationTrend } from '../../data/analytics'
 import { students } from '../../data/students'
 import { companies } from '../../data/companies'
 import { useUser } from '../../context/UserContext'
-import { useAuth } from '../../context/AuthContext'
 
 export function FacultyDashboard() {
   const {toast}=useUser()
