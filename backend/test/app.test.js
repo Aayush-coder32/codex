@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict'
 import { after, before, test } from 'node:test'
 import { app } from '../src/app.js'
+import { registerSchema } from '../src/validation/schemas.js'
 
 let server
 let baseUrl
@@ -28,6 +29,15 @@ test('protected endpoints reject requests without an access token', async () => 
   assert.equal(response.status, 401)
   assert.equal(body.error.code, 'AUTH_REQUIRED')
   assert.ok(body.error.requestId)
+})
+
+test('administrator signup payload passes registration validation', () => {
+  const result = registerSchema.safeParse({
+    body: { name: 'Admin', email: 'admin@gmail.com', password: 'password', role: 'admin' },
+    params: {},
+    query: {},
+  })
+  assert.equal(result.success, true)
 })
 
 test('unknown endpoints return the standard error envelope', async () => {
