@@ -43,6 +43,7 @@ const assessmentQuestions = [
 ]
 
 function CompanyAssessment() {
+  const { toast } = useUser()
   const [company, setCompany] = useState(null), [answers, setAnswers] = useState({}), [submitted, setSubmittedState] = useState(false)
   const choose = (index, option, multiple) => setAnswers((current) => ({ ...current, [index]: multiple ? (current[index] || []).includes(option) ? current[index].filter((item) => item !== option) : [...(current[index] || []), option] : [option] }))
   const score = assessmentQuestions.filter((question, index) => question.answer.length === (answers[index] || []).length && question.answer.every((answer) => (answers[index] || []).includes(answer))).length
@@ -51,7 +52,11 @@ function CompanyAssessment() {
     const url = URL.createObjectURL(new Blob([result], { type: 'text/plain;charset=utf-8' })), link = document.createElement('a')
     link.href = url; link.download = `${company.toLowerCase()}-assessment-result.txt`; link.click(); URL.revokeObjectURL(url)
   }
-  const setSubmitted = (value) => { if (value && submitted) downloadResult(); else setSubmittedState(value) }
+  const setSubmitted = (value) => {
+    if (value && submitted) { downloadResult(); toast('Form successfully submitted. Your result has been downloaded.') }
+    else if (value) { setSubmittedState(true); toast('Form successfully submitted. Your score is ready to view.') }
+    else setSubmittedState(false)
+  }
   useEffect(() => {
     if (!submitted) return
     const button = [...document.querySelectorAll('button')].find((item) => item.textContent.includes('Check score again'))
