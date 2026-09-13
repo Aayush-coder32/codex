@@ -208,7 +208,7 @@ function LeetCodeAccountPage() {
 export function LinkedInResumePage() {
   const { toast } = useUser()
   const { user, accessToken } = useAuth()
-  const [form, setForm] = useState(null), [profile, setProfile] = useState(null), [generated, setGenerated] = useState(null), [loading, setLoading] = useState(true), [error, setError] = useState('')
+  const [form, setForm] = useState(null), [profile, setProfile] = useState(null), [generated, setGenerated] = useState(null), [loading, setLoading] = useState(true), [error, setError] = useState(''), [atsOpen, setAtsOpen] = useState(false)
   useEffect(() => {
     if (!accessToken) return
     let active = true
@@ -221,6 +221,7 @@ export function LinkedInResumePage() {
   }, [accessToken, user?.name, user?.email])
   const update = (key) => (event) => setForm(current => ({ ...current, [key]: event.target.value }))
   const generateResume = () => { setGenerated({ ...form }); toast('Resume generated from your backend profile') }
+  const atsScore = generated ? Math.min(96, 52 + (generated.summary.trim() ? 12 : 0) + (generated.headline.trim() ? 8 : 0) + Math.min(24, generated.skills.split(',').filter(Boolean).length * 4)) : 0
   const downloadResume = () => {
     if (!generated) return
     const escapeProjectText = (value) => String(value || '').replace(/[&<>]/g, character => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' })[character])
