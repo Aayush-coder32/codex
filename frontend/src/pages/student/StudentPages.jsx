@@ -173,7 +173,7 @@ function LeetCodeAccountPage() {
   const { accessToken } = useAuth()
   const apiBaseUrl = (import.meta.env.VITE_API_URL || '').replace(/\/$/, '')
   const [account, setAccount] = useState(null), [loading, setLoading] = useState(true)
-  const [mode, setMode] = useState(null), [message, setMessage] = useState(''), [submitting, setSubmitting] = useState(false)
+  const [mode, setMode] = useState(null), [practiceOpen, setPracticeOpen] = useState(false), [message, setMessage] = useState(''), [submitting, setSubmitting] = useState(false)
   const request = async (path, options = {}) => {
     const response = await fetch(`${apiBaseUrl}/api/v1/leetcode${path}`, { ...options, credentials: 'include', headers: { Authorization: `Bearer ${accessToken}`, ...(options.body ? { 'Content-Type': 'application/json' } : {}) } })
     const body = response.status === 204 ? null : await response.json().catch(() => null)
