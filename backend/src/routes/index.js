@@ -12,6 +12,7 @@ import announcementRoutes from './announcementRoutes.js'
 import institutionRoutes from './institutionRoutes.js'
 import analyticsRoutes from './analyticsRoutes.js'
 import leetCodeRoutes from './leetCodeRoutes.js'
+import interviewPreparationRoutes from './interviewPreparationRoutes.js'
 
 const router = Router()
 
@@ -34,5 +35,6 @@ router.use('/notifications', notificationRoutes)
 router.use('/announcements', announcementRoutes)
 router.use('/analytics', analyticsRoutes)
 router.use('/leetcode', leetCodeRoutes)
+router.use('/interview-preparations', interviewPreparationRoutes)
 
 export default router

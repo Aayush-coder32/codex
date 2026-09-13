@@ -21,3 +21,12 @@ export const resumeUpload = multer({
     done(null, true)
   },
 })
+
+export const interviewPhotoUpload = multer({
+  storage,
+  limits: { fileSize: 5 * 1024 * 1024, files: 1 },
+  fileFilter: (_req, file, done) => {
+    if (!['image/jpeg', 'image/png', 'image/webp'].includes(file.mimetype)) return done(new ApiError(415, 'Only JPEG, PNG, or WebP photos are accepted', 'INVALID_FILE_TYPE'))
+    done(null, true)
+  },
+})
