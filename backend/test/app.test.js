@@ -40,6 +40,16 @@ test('administrator signup payload passes registration validation', () => {
   assert.equal(result.success, true)
 })
 
+test('administrator display label is normalized to the admin role', () => {
+  const result = registerSchema.safeParse({
+    body: { name: 'Admin', email: 'admin@gmail.com', password: 'password', role: 'Administrator' },
+    params: {},
+    query: {},
+  })
+  assert.equal(result.success, true)
+  assert.equal(result.data.body.role, 'admin')
+})
+
 test('unknown endpoints return the standard error envelope', async () => {
   const response = await fetch(`${baseUrl}/api/v1/not-a-route`)
   const body = await response.json()

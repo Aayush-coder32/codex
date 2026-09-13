@@ -3,7 +3,12 @@ import { z } from 'zod'
 const objectId = z.string().regex(/^[a-f\d]{24}$/i, 'Invalid resource id')
 const email = z.string().trim().toLowerCase().email().max(254)
 const password = z.string().min(8).max(72)
-const role = z.enum(['student', 'faculty', 'company', 'admin'])
+// Keep the API role values stable even when a client uses the display label
+// "Administrator". Older UI builds used that label as the submitted value.
+const role = z.preprocess(
+  (value) => typeof value === 'string' && value.trim().toLowerCase() === 'administrator' ? 'admin' : value,
+  z.enum(['student', 'faculty', 'company', 'admin']),
+)
 const opportunityStatus = z.enum(['Draft', 'Active', 'Closed', 'Archived'])
 const applicationStatus = z.enum(['Applied', 'Under Review', 'Shortlisted', 'Interview', 'Selected', 'Rejected', 'Withdrawn'])
 

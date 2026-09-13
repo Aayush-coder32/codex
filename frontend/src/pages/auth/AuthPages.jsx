@@ -315,7 +315,8 @@ export function Signup() {
         name: String(form.get('name') || '').trim(),
         email: String(form.get('email') || '').trim().toLowerCase(),
         password: String(form.get('password') || ''),
-        role: String(selectedRole || '').trim().toLowerCase(),
+        // Submit the API role key, never the human-readable account title.
+        role: selected.role,
         ...(selectedRole === 'company' ? { organizationName: String(form.get('organizationName') || '').trim() } : {}),
       }
       const session = await register(details)
