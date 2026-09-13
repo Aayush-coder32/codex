@@ -4,7 +4,7 @@ import PublicOpportunities from './pages/public/PublicOpportunities'
 import { ForgotPassword, Login, Signup } from './pages/auth/AuthPages'
 import AppShell from './components/layout/AppShell'
 import { useAuth } from './context/AuthContext'
-import { StudentDashboard, StudentProfile, SkillAnalysis, StudentRoadmap, StudentOpportunities, OpportunityDetails, StudentApplications, ProjectsPage, CertificatesPage } from './pages/student/StudentPages'
+import { StudentDashboard, StudentProfile, SkillAnalysis, StudentRoadmap, StudentOpportunities, OpportunityDetails, StudentApplications, ProjectsPage, CertificatesPage, LeetCodePage, LinkedInResumePage } from './pages/student/StudentPages'
 import { FacultyAnalytics, FacultyCollaboration, FacultyCollaborationDetail, FacultyDashboard, FacultyReports, FacultyStudents, FacultyTraining } from './pages/faculty/FacultyPages'
 import { CompanyAnalytics, CompanyApplications, CompanyDashboard, CompanyProfile, FindStudents, ManageOpportunities, PostOpportunity } from './pages/company/CompanyPages'
 import { AdminAnnouncements, AdminApplications, AdminCompanies, AdminDashboard, AdminInstitutions, AdminOpportunities, AdminReports, AdminStudents } from './pages/admin/AdminPages'
@@ -52,6 +52,8 @@ export default function App() {
       <Route path="/student/opportunities" element={<StudentOpportunities/>}/>
       <Route path="/student/opportunities/:id" element={<OpportunityDetails/>}/>
       <Route path="/student/applications" element={<StudentApplications/>}/>
+      <Route path="/student/leetcode" element={<LeetCodePage/>}/>
+      <Route path="/student/linkedin-resume" element={<LinkedInResumePage/>}/>
       <Route path="/student/projects" element={<ProjectsPage/>}/>
       <Route path="/student/certificates" element={<CertificatesPage/>}/>
       <Route path="/student/messages" element={<MessagesPage/>}/>
