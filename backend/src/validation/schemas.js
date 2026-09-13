@@ -30,6 +30,13 @@ export const loginSchema = request({ body: z.object({
   password: z.string().min(1).max(72),
   role: role.optional(),
 }) })
+export const leetCodeRegisterSchema = request({ body: z.object({
+  name: z.string().trim().min(2).max(100),
+  username: z.string().trim().toLowerCase().regex(/^[a-z0-9_]{3,30}$/, 'Username can use lowercase letters, numbers and underscores only'),
+  email,
+  password,
+}) })
+export const leetCodeLoginSchema = request({ body: z.object({ email, password: z.string().min(1).max(72) }) })
 export const forgotPasswordSchema = request({ body: z.object({ email }) })
 export const resetPasswordSchema = request({ body: z.object({ token: z.string().min(20), password }) })
 export const changePasswordSchema = request({ body: z.object({ currentPassword: z.string().min(1), newPassword: password }) })
