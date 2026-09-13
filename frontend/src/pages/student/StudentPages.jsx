@@ -173,7 +173,7 @@ export function LinkedInResumePage() {
   useEffect(() => {
     if (!accessToken) return
     let active = true
-    fetch('/api/v1/students/me', { headers: { Authorization: `Bearer ${accessToken}` } })
+    fetch(`${(import.meta.env.VITE_API_URL || '').replace(/\/$/, '')}/api/v1/students/me`, { headers: { Authorization: `Bearer ${accessToken}` }, credentials: 'include' })
       .then(async response => { const body = await response.json().catch(() => null); if (!response.ok) throw new Error(body?.error?.message || 'Could not load your profile.'); return body.data.profile })
       .then(data => { if (!active) return; setProfile(data); setForm({ name: data.user?.name || user?.name || '', headline: data.preferences?.targetRole || '', email: data.user?.email || user?.email || '', phone: data.phone || '', location: data.location || '', summary: data.about || '', linkedin: '', skills: (data.skills || []).map(skill => skill.name).join(', ') }) })
       .catch(requestError => { if (active) setError(requestError.message) })
