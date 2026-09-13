@@ -170,22 +170,33 @@ export function LeetCodePage() {
 }
 
 function LeetCodeAccountPage() {
-  const storageKey = 'skillbridge_leetcode_account'
-  const [account, setAccount] = useState(() => { try { return JSON.parse(localStorage.getItem(storageKey)) } catch { return null } })
-  const [mode, setMode] = useState(null), [message, setMessage] = useState('')
+  const { accessToken } = useAuth()
+  const apiBaseUrl = (import.meta.env.VITE_API_URL || '').replace(/\/$/, '')
+  const [account, setAccount] = useState(null), [loading, setLoading] = useState(true)
+  const [mode, setMode] = useState(null), [message, setMessage] = useState(''), [submitting, setSubmitting] = useState(false)
+  const request = async (path, options = {}) => {
+    const response = await fetch(`${apiBaseUrl}/api/v1/leetcode${path}`, { ...options, credentials: 'include', headers: { Authorization: `Bearer ${accessToken}`, ...(options.body ? { 'Content-Type': 'application/json' } : {}) } })
+    const body = response.status === 204 ? null : await response.json().catch(() => null)
+    if (!response.ok) throw new Error(body?.error?.message || 'The request could not be completed.')
+    return body?.data
+  }
+  useEffect(() => {
+    if (!accessToken) return
+    request('/account').then(data => setAccount(data.account)).catch(error => setMessage(error.message)).finally(() => setLoading(false))
+  }, [accessToken])
   const close = () => { setMode(null); setMessage('') }
   const submit = (event) => {
     event.preventDefault()
-    const data = new FormData(event.currentTarget), email = String(data.get('email') || '').trim().toLowerCase(), password = String(data.get('password') || '')
-    if (mode === 'signup') {
-      const next = { name: String(data.get('name') || '').trim(), username: String(data.get('username') || '').trim(), email, password }
-      if (!next.name || !next.username || !email || password.length < 6) return setMessage('Please enter all details. Password must be at least 6 characters.')
-      localStorage.setItem(storageKey, JSON.stringify(next)); setAccount(next); close(); return
-    }
-    if (!account || account.email !== email || account.password !== password) return setMessage('Email or password is incorrect. Create an account first if you are new.')
-    close()
+    const data = new FormData(event.currentTarget)
+    const payload = Object.fromEntries(data.entries())
+    setSubmitting(true); setMessage('')
+    request(mode === 'signup' ? '/register' : '/login', { method: 'POST', body: JSON.stringify(payload) })
+      .then(result => { setAccount(result.account); close() })
+      .catch(error => setMessage(error.message))
+      .finally(() => setSubmitting(false))
   }
-  const logout = () => setAccount(null)
+  const logout = () => request('/logout', { method: 'POST' }).then(() => setAccount(null)).catch(error => setMessage(error.message))
+  if (loading) return <div className="grid min-h-[45vh] place-items-center"><span className="h-9 w-9 animate-spin rounded-full border-4 border-blue-100 border-t-blue-600"/></div>
   return <><section className="relative overflow-hidden rounded-3xl bg-[#0f172a] px-6 py-12 text-white shadow-xl sm:px-10 sm:py-16"><div className="absolute -right-16 -top-20 h-72 w-72 rounded-full border-[36px] border-[#ffa116]/20"/><div className="absolute bottom-0 left-1/2 h-40 w-96 -translate-x-1/2 rounded-full bg-blue-500/20 blur-3xl"/><div className="relative mx-auto max-w-3xl text-center"><span className="mx-auto grid h-16 w-16 place-items-center rounded-2xl bg-[#ffa116] shadow-lg shadow-orange-500/30"><Code2 size={34}/></span><p className="mt-6 text-sm font-bold uppercase tracking-[.2em] text-[#ffd08a]">SkillBridge × LeetCode</p><h1 className="mt-3 text-3xl font-extrabold sm:text-5xl">Practice. Learn. Level up.</h1><p className="mx-auto mt-5 max-w-xl text-base leading-7 text-slate-300">Create your coding profile to start tracking your problem-solving journey in one place.</p>{account ? <div className="mt-8 rounded-2xl border border-white/10 bg-white/10 p-4 backdrop-blur"><p className="text-sm text-slate-300">Signed in as</p><p className="mt-1 text-lg font-extrabold">{account.name} <span className="font-medium text-[#ffd08a]">@{account.username}</span></p><button onClick={logout} className="mt-3 text-sm font-bold text-white underline underline-offset-4">Log out</button></div> : <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row"><button onClick={()=>setMode('signup')} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-[#ffa116] px-5 text-sm font-bold text-white transition hover:bg-[#ffad2d]"><UserPlus size={18}/>Sign up free</button><button onClick={()=>setMode('login')} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl border border-white/25 bg-white/5 px-5 text-sm font-bold text-white transition hover:bg-white/10"><LogIn size={18}/>Log in</button></div>}</div></section>
     <section className="mt-6 grid gap-4 md:grid-cols-3"><article className="card p-5"><Code2 className="text-[#f59e0b]"/><h2 className="mt-4 font-bold text-navy-900">Solve challenges</h2><p className="mt-2 text-sm leading-6 text-slate-500">Build fluency with focused algorithm and data-structure practice.</p></article><article className="card p-5"><Trophy className="text-violet-600"/><h2 className="mt-4 font-bold text-navy-900">Earn achievements</h2><p className="mt-2 text-sm leading-6 text-slate-500">Celebrate consistency and milestones as your coding skills grow.</p></article><article className="card p-5"><Rocket className="text-blue-600"/><h2 className="mt-4 font-bold text-navy-900">Show your progress</h2><p className="mt-2 text-sm leading-6 text-slate-500">Keep a career-ready coding profile alongside your SkillBridge journey.</p></article></section>
     <Modal open={!!mode} onClose={close} title={mode === 'signup' ? 'Create your LeetCode account' : 'Log in to LeetCode'} description={mode === 'signup' ? 'Your account will be signed in immediately after registration.' : 'Use the email and password you registered with.'}><form onSubmit={submit} className="space-y-4">{mode === 'signup' && <><Field required name="name" label="Full name" placeholder="Enter your name"/><Field required name="username" label="Username" placeholder="e.g. coder_rahul"/></>}<Field required name="email" type="email" label="Email address" placeholder="you@example.com"/><Field required name="password" type="password" minLength="6" label="Password" placeholder="At least 6 characters"/>{message && <p className="rounded-xl bg-rose-50 p-3 text-sm font-medium text-rose-700">{message}</p>}<button className="btn-primary w-full">{mode === 'signup' ? <><UserPlus size={16}/>Create account & sign in</> : <><LogIn size={16}/>Log in</>}</button><p className="text-center text-sm text-slate-500">{mode === 'signup' ? 'Already registered?' : 'New here?'} <button type="button" onClick={()=>{setMode(mode === 'signup' ? 'login' : 'signup');setMessage('')}} className="font-bold text-brand-600">{mode === 'signup' ? 'Log in' : 'Create an account'}</button></p></form></Modal></>
@@ -209,8 +220,9 @@ export function LinkedInResumePage() {
   const generateResume = () => { setGenerated({ ...form }); toast('Resume generated from your backend profile') }
   const downloadResume = () => {
     if (!generated) return
+    const escapeProjectText = (value) => String(value || '').replace(/[&<>]/g, character => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' })[character])
     const skills = generated.skills.split(',').map(x=>x.trim()).filter(Boolean).join(' • ')
-    const projectRows = (profile.projects || []).slice(0, 3).map(project => `<div class="project"><b>${safe(project.title)}</b><br><span>${safe(project.description)}</span></div>`).join('')
+    const projectRows = (profile.projects || []).slice(0, 3).map(project => `<div class="project"><b>${escapeProjectText(project.title)}</b><br><span>${escapeProjectText(project.description)}</span></div>`).join('')
     const safe = (value) => String(value || '').replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' })[c])
     const documentHtml = `<!doctype html><html><head><meta charset="utf-8"><style>body{font-family:Arial,sans-serif;color:#172033;max-width:760px;margin:42px auto;line-height:1.55}h1{font-size:30px;margin:0;color:#123b78}h2{font-size:14px;text-transform:uppercase;letter-spacing:1px;color:#1558d6;border-bottom:1px solid #cbd5e1;padding-bottom:6px;margin-top:26px}.contact{color:#526078;font-size:13px}.headline{font-size:16px;margin:8px 0}.project{margin:12px 0}.project span{font-size:14px}</style></head><body><h1>${safe(form.name)}</h1><p class="headline">${safe(form.headline)}</p><p class="contact">${safe(form.email)} | ${safe(form.phone)} | ${safe(form.location)} | ${safe(form.linkedin)}</p><h2>Professional Summary</h2><p>${safe(form.summary)}</p><h2>Skills</h2><p>${safe(skills)}</p><h2>Projects</h2>${projectRows}<h2>Education</h2><p><b>${safe(profile.degree)}</b><br>${safe(profile.college)} | Graduating ${safe(profile.graduationYear)}</p></body></html>`
     const blob = new Blob([documentHtml], { type: 'application/msword' })
