@@ -25,7 +25,8 @@ export async function register(req, res) {
 
 export async function login(req, res) {
   const account = await LeetCodeAccount.findOne({ user: req.user._id, email: req.validated.body.email }).select('+passwordHash')
-  if (!account || !(await bcrypt.compare(req.validated.body.password, account.passwordHash))) throw new ApiError(401, 'Email or password is incorrect', 'INVALID_LEETCODE_CREDENTIALS')
+  if (!account) throw new ApiError(404, 'No LeetCode account was found. Please sign up first.', 'LEETCODE_ACCOUNT_NOT_FOUND')
+  if (!(await bcrypt.compare(req.validated.body.password, account.passwordHash))) throw new ApiError(401, 'Password is incorrect. Please try again.', 'INVALID_LEETCODE_CREDENTIALS')
   account.sessionActive = true
   account.lastLoginAt = new Date()
   await account.save()
