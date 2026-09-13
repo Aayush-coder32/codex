@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useMemo, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { BarChart3, BriefcaseBusiness, Building2, CalendarClock, Check, ChevronRight, CircleDollarSign, Clock3, Download, Eye, FileCheck2, GraduationCap, MapPin, MessageSquare, MoreHorizontal, Plus, Search, Send, Sparkles, Target, Trash2, TrendingUp, UserCheck, UserRoundCheck, UsersRound, X } from 'lucide-react'
 import { ChartCard, EmptyState, Field, Modal, PageHeader, Pagination, ProfileAvatar, ProgressRing, SelectField, SkillChip, StatCard, StatusBadge, Tabs, TextareaField } from '../../components/common/UI'
@@ -47,21 +47,10 @@ function CompanyAssessment() {
   const [company, setCompany] = useState(null), [answers, setAnswers] = useState({}), [submitted, setSubmittedState] = useState(false)
   const choose = (index, option, multiple) => setAnswers((current) => ({ ...current, [index]: multiple ? (current[index] || []).includes(option) ? current[index].filter((item) => item !== option) : [...(current[index] || []), option] : [option] }))
   const score = assessmentQuestions.filter((question, index) => question.answer.length === (answers[index] || []).length && question.answer.every((answer) => (answers[index] || []).includes(answer))).length
-  const downloadResult = () => {
-    const result = [`${company} Assessment Result`, '=========================', 'Questions: 10', `Score: ${score}/10`, `Percentage: ${score * 10}%`, `Generated: ${new Date().toLocaleString('en-IN')}`].join('\n')
-    const url = URL.createObjectURL(new Blob([result], { type: 'text/plain;charset=utf-8' })), link = document.createElement('a')
-    link.href = url; link.download = `${company.toLowerCase()}-assessment-result.txt`; link.click(); URL.revokeObjectURL(url)
-  }
   const setSubmitted = (value) => {
-    if (value && submitted) { downloadResult(); toast('Form successfully submitted. Your result has been downloaded.') }
-    else if (value) { setSubmittedState(true); toast('Form successfully submitted. Your score is ready to view.') }
+    if (value) { setSubmittedState(true); toast('Test successfully submitted') }
     else setSubmittedState(false)
   }
-  useEffect(() => {
-    if (!submitted) return
-    const button = [...document.querySelectorAll('button')].find((item) => item.textContent.includes('Check score again'))
-    if (button) button.textContent = 'View result & download'
-  }, [submitted])
   const start = (name) => { setCompany(name); setAnswers({}); setSubmitted(false) }
   return <section className="card mt-5 overflow-hidden"><div className="bg-gradient-to-r from-blue-700 to-violet-700 p-6 text-white"><p className="text-xs font-bold uppercase tracking-[.16em] text-blue-100">Company assessments</p><h2 className="mt-2 text-xl font-extrabold">Practice aptitude test</h2><p className="mt-2 text-sm text-blue-100">Choose a company and complete 10 MCQ/MSQ questions.</p><div className="mt-5 flex flex-wrap gap-2">{['TCS', 'Wipro', 'Accenture', 'HCL'].map((name) => <button key={name} onClick={() => start(name)} className={`rounded-xl px-4 py-2.5 text-sm font-bold transition ${company === name ? 'bg-white text-blue-700' : 'bg-white/15 text-white hover:bg-white/25'}`}>{name}</button>)}</div></div>{company && <div className="p-5 sm:p-7"><div className="mb-6 flex flex-wrap items-center justify-between gap-3"><div><h3 className="text-lg font-extrabold text-navy-900">{company} assessment</h3><p className="mt-1 text-sm text-slate-500">10 questions · MCQ and MSQ</p></div>{submitted && <span className="rounded-full bg-emerald-50 px-4 py-2 text-sm font-extrabold text-emerald-700">Score: {score}/10</span>}</div><div className="space-y-5">{assessmentQuestions.map((question, index) => <fieldset key={question.text} className="rounded-2xl border border-slate-200 p-4"><legend className="sr-only">Question {index + 1}</legend><div className="flex gap-3"><span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-blue-50 text-xs font-extrabold text-blue-700">{index + 1}</span><div className="min-w-0 flex-1"><div className="flex flex-wrap items-center gap-2"><p className="font-semibold text-navy-900">{question.text}</p><span className="rounded bg-violet-50 px-2 py-0.5 text-[10px] font-bold text-violet-700">{question.type}</span></div><div className="mt-3 grid gap-2 sm:grid-cols-2">{question.options.map((option) => <label key={option} className="flex cursor-pointer items-center gap-2 rounded-xl border border-slate-200 px-3 py-2.5 text-sm text-slate-700 hover:bg-slate-50"><input disabled={submitted} checked={(answers[index] || []).includes(option)} onChange={() => choose(index, option, question.type === 'MSQ')} type={question.type === 'MSQ' ? 'checkbox' : 'radio'} name={`question-${index}`} className="accent-blue-600"/>{option}</label>)}</div></div></div></fieldset>)}</div><div className="mt-6 flex flex-wrap justify-end gap-3"><button onClick={() => { setAnswers({}); setSubmitted(false) }} className="btn-secondary">Reset answers</button><button onClick={() => setSubmitted(true)} className="btn-primary"><Check size={16}/>{submitted ? 'Check score again' : 'Submit & check score'}</button></div></div>}</section>
 }
