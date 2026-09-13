@@ -8,7 +8,7 @@ import { StudentDashboard, StudentProfile, SkillAnalysis, StudentRoadmap, Studen
 import { FacultyAnalytics, FacultyCollaboration, FacultyCollaborationDetail, FacultyDashboard, FacultyReports, FacultyStudents, FacultyTraining } from './pages/faculty/FacultyPages'
 import { CompanyAnalytics, CompanyApplications, CompanyDashboard, CompanyProfile, FindStudents, ManageOpportunities, PostOpportunity } from './pages/company/CompanyPages'
 import { AdminAnnouncements, AdminApplications, AdminCompanies, AdminDashboard, AdminInstitutions, AdminOpportunities, AdminReports, AdminStudents } from './pages/admin/AdminPages'
-import { MessagesPage, NotificationsPage, SettingsPage } from './pages/shared/SharedPages'
+import { CareerOpportunitiesPage, NotificationsPage, SettingsPage } from './pages/shared/SharedPages'
 import { EmptyState, ToastHost } from './components/common/UI'
 import { Compass } from 'lucide-react'
 
@@ -56,7 +56,7 @@ export default function App() {
       <Route path="/student/linkedin-resume" element={<LinkedInResumePage/>}/>
       <Route path="/student/projects" element={<ProjectsPage/>}/>
       <Route path="/student/certificates" element={<CertificatesPage/>}/>
-      <Route path="/student/messages" element={<MessagesPage/>}/>
+      <Route path="/student/messages" element={<CareerOpportunitiesPage/>}/>
       <Route path="/student/notifications" element={<NotificationsPage/>}/>
       <Route path="/student/settings" element={<SettingsPage/>}/>
     </Route>
@@ -68,7 +68,7 @@ export default function App() {
       <Route path="/faculty/training" element={<FacultyTraining/>}/>
       <Route path="/faculty/collaboration" element={<FacultyCollaboration/>}/>
       <Route path="/faculty/collaboration/:companyId" element={<FacultyCollaborationDetail/>}/>
-      <Route path="/faculty/communications" element={<MessagesPage/>}/>
+      <Route path="/faculty/communications" element={<CareerOpportunitiesPage/>}/>
       <Route path="/faculty/reports" element={<FacultyReports/>}/>
       <Route path="/faculty/settings" element={<SettingsPage/>}/>
     </Route>
@@ -80,7 +80,7 @@ export default function App() {
       <Route path="/company/applications" element={<CompanyApplications/>}/>
       <Route path="/company/students" element={<FindStudents/>}/>
       <Route path="/company/analytics" element={<CompanyAnalytics/>}/>
-      <Route path="/company/messages" element={<MessagesPage/>}/>
+      <Route path="/company/messages" element={<CareerOpportunitiesPage/>}/>
       <Route path="/company/profile" element={<CompanyProfile/>}/>
       <Route path="/company/settings" element={<SettingsPage/>}/>
     </Route>
