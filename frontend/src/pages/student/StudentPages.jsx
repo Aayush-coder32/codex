@@ -167,17 +167,30 @@ export function LeetCodePage() {
 }
 
 export function LinkedInResumePage() {
-  const { profile, projects, toast } = useUser()
-  const [form, setForm] = useState({ name: profile.name, headline: 'Aspiring Full-Stack Developer', email: profile.email, phone: profile.phone, location: profile.location, summary: profile.about, linkedin: 'linkedin.com/in/aarav-sharma', skills: profile.skills.slice(0, 6).map(x=>x.name).join(', ') })
+  const { toast } = useUser()
+  const { user, accessToken } = useAuth()
+  const [form, setForm] = useState(null), [profile, setProfile] = useState(null), [generated, setGenerated] = useState(null), [loading, setLoading] = useState(true), [error, setError] = useState('')
+  useEffect(() => {
+    if (!accessToken) return
+    let active = true
+    fetch('/api/v1/students/me', { headers: { Authorization: `Bearer ${accessToken}` } })
+      .then(async response => { const body = await response.json().catch(() => null); if (!response.ok) throw new Error(body?.error?.message || 'Could not load your profile.'); return body.data.profile })
+      .then(data => { if (!active) return; setProfile(data); setForm({ name: data.user?.name || user?.name || '', headline: data.preferences?.targetRole || '', email: data.user?.email || user?.email || '', phone: data.phone || '', location: data.location || '', summary: data.about || '', linkedin: '', skills: (data.skills || []).map(skill => skill.name).join(', ') }) })
+      .catch(requestError => { if (active) setError(requestError.message) })
+      .finally(() => { if (active) setLoading(false) })
+    return () => { active = false }
+  }, [accessToken, user?.name, user?.email])
   const update = (key) => (event) => setForm(current => ({ ...current, [key]: event.target.value }))
+  const generateResume = () => { setGenerated({ ...form }); toast('Resume generated from your backend profile') }
   const downloadResume = () => {
-    const skills = form.skills.split(',').map(x=>x.trim()).filter(Boolean).join(' • ')
-    const projectRows = projects.slice(0, 3).map(project => `<div class="project"><b>${project.title}</b><br><span>${project.description}</span></div>`).join('')
+    if (!generated) return
+    const skills = generated.skills.split(',').map(x=>x.trim()).filter(Boolean).join(' • ')
+    const projectRows = (profile.projects || []).slice(0, 3).map(project => `<div class="project"><b>${safe(project.title)}</b><br><span>${safe(project.description)}</span></div>`).join('')
     const safe = (value) => String(value || '').replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' })[c])
     const documentHtml = `<!doctype html><html><head><meta charset="utf-8"><style>body{font-family:Arial,sans-serif;color:#172033;max-width:760px;margin:42px auto;line-height:1.55}h1{font-size:30px;margin:0;color:#123b78}h2{font-size:14px;text-transform:uppercase;letter-spacing:1px;color:#1558d6;border-bottom:1px solid #cbd5e1;padding-bottom:6px;margin-top:26px}.contact{color:#526078;font-size:13px}.headline{font-size:16px;margin:8px 0}.project{margin:12px 0}.project span{font-size:14px}</style></head><body><h1>${safe(form.name)}</h1><p class="headline">${safe(form.headline)}</p><p class="contact">${safe(form.email)} | ${safe(form.phone)} | ${safe(form.location)} | ${safe(form.linkedin)}</p><h2>Professional Summary</h2><p>${safe(form.summary)}</p><h2>Skills</h2><p>${safe(skills)}</p><h2>Projects</h2>${projectRows}<h2>Education</h2><p><b>${safe(profile.degree)}</b><br>${safe(profile.college)} | Graduating ${safe(profile.graduationYear)}</p></body></html>`
     const blob = new Blob([documentHtml], { type: 'application/msword' })
     const url = URL.createObjectURL(blob), anchor = document.createElement('a')
-    anchor.href = url; anchor.download = `${form.name.trim().replace(/\s+/g, '_') || 'LinkedIn'}_Resume.doc`; anchor.click(); URL.revokeObjectURL(url)
+    anchor.href = url; anchor.download = `${generated.name.trim().replace(/\s+/g, '_') || 'LinkedIn'}_Resume.doc`; anchor.click(); URL.revokeObjectURL(url)
     toast('Your resume has been downloaded')
   }
   return <><PageHeader eyebrow="LinkedIn tools" title="Build your LinkedIn resume" description="Fill in your professional details and download a polished, recruiter-ready resume."><button onClick={downloadResume} className="btn-primary"><FileDown size={17}/>Download resume</button></PageHeader>
