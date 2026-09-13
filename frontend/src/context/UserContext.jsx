@@ -1,7 +1,6 @@
 import { createContext, useCallback, useContext, useState } from 'react'
 import { useLocalStorage } from '../hooks/useLocalStorage'
 import { initialWorkshops } from '../data/workshops'
-import { initialConversations } from '../data/messages'
 
 const initialStudents = []
 
@@ -31,7 +30,6 @@ export function UserProvider({ children }) {
   const [certificates, setCertificates] = useLocalStorage('skillbridge_certificates', defaultCertificates)
   const [workshops, setWorkshops] = useLocalStorage('skillbridge_workshops', initialWorkshops)
   const [students, setStudents] = useLocalStorage('skillbridge_students', initialStudents)
-  const [conversations, setConversations] = useLocalStorage('skillbridge_messages', initialConversations)
   const [toasts, setToasts] = useState([])
 
   const toast = useCallback((message, tone = 'success') => {
@@ -42,9 +40,8 @@ export function UserProvider({ children }) {
 
   const upsert = (setter, item) => setter((items) => item.id ? items.map((old) => old.id === item.id ? item : old) : [{ ...item, id: `id-${Date.now()}` }, ...items])
   const remove = (setter, id) => setter((items) => items.filter((item) => item.id !== id))
-  const sendMessage = (conversationId, text) => setConversations((items) => items.map((item) => item.id === conversationId ? { ...item, messages: [...item.messages, { id: Date.now(), from: 'me', text, time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) }] } : item))
 
-  const value = { profile, setProfile, projects, upsertProject: (x) => upsert(setProjects, x), removeProject: (id) => remove(setProjects, id), certificates, upsertCertificate: (x) => upsert(setCertificates, x), removeCertificate: (id) => remove(setCertificates, id), workshops, addWorkshop: (x) => upsert(setWorkshops, x), students, addStudent: (x) => upsert(setStudents, x), conversations, sendMessage, toasts, toast }
+  const value = { profile, setProfile, projects, upsertProject: (x) => upsert(setProjects, x), removeProject: (id) => remove(setProjects, id), certificates, upsertCertificate: (x) => upsert(setCertificates, x), removeCertificate: (id) => remove(setCertificates, id), workshops, addWorkshop: (x) => upsert(setWorkshops, x), students, addStudent: (x) => upsert(setStudents, x), toasts, toast }
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>
 }
 
