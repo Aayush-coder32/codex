@@ -14,6 +14,7 @@ import analyticsRoutes from './analyticsRoutes.js'
 import leetCodeRoutes from './leetCodeRoutes.js'
 import interviewPreparationRoutes from './interviewPreparationRoutes.js'
 import enquiryRoutes from './enquiryRoutes.js'
+import facultyStudentSubmissionRoutes from './facultyStudentSubmissionRoutes.js'
 
 const router = Router()
 
@@ -38,5 +39,6 @@ router.use('/analytics', analyticsRoutes)
 router.use('/leetcode', leetCodeRoutes)
 router.use('/interview-preparations', interviewPreparationRoutes)
 router.use('/enquiries', enquiryRoutes)
+router.use('/faculty-student-submissions', facultyStudentSubmissionRoutes)
 
 export default router

@@ -30,3 +30,16 @@ export const interviewPhotoUpload = multer({
     done(null, true)
   },
 })
+
+const documentUpload = multer({
+  storage,
+  limits: { fileSize: env.maxUploadMb * 1024 * 1024, files: 6 },
+  fileFilter: (_req, file, done) => {
+    if (!['application/pdf', 'image/jpeg', 'image/png', 'image/webp'].includes(file.mimetype)) return done(new ApiError(415, 'Upload PDF, JPEG, PNG, or WebP files only', 'INVALID_FILE_TYPE'))
+    done(null, true)
+  },
+})
+export const facultyStudentDocumentsUpload = documentUpload.fields([
+  { name: 'photo', maxCount: 1 }, { name: 'signature', maxCount: 1 }, { name: 'class10Marksheet', maxCount: 1 },
+  { name: 'class12Marksheet', maxCount: 1 }, { name: 'btechMarksheet', maxCount: 1 }, { name: 'mtechMarksheet', maxCount: 1 },
+])
