@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
 import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom'
-import { LayoutDashboard, UserRound, ScanSearch, Map, BriefcaseBusiness, FileClock, FolderKanban, Award, MessageSquare, Bell, Settings, UsersRound, ChartNoAxesCombined, Handshake, Presentation, FileChartColumn, PlusSquare, ClipboardList, Search, Building2, Landmark, Megaphone, Menu, X, ChevronDown, LogOut, HelpCircle, Command, ArrowRight, Code2, Linkedin } from 'lucide-react'
+import { LayoutDashboard, UserRound, ScanSearch, Map, BriefcaseBusiness, FileClock, FolderKanban, Award, MessageSquare, Bell, Settings, UsersRound, ChartNoAxesCombined, Handshake, Presentation, FileChartColumn, PlusSquare, ClipboardList, Search, Building2, Landmark, Megaphone, Menu, X, ChevronDown, LogOut, HelpCircle, Command, ArrowRight, Code2, Linkedin, Phone } from 'lucide-react'
 import { Logo, ProfileAvatar, ToastHost } from '../common/UI'
 import { useAuth } from '../../context/AuthContext'
 import { useNotifications } from '../../context/NotificationContext'
@@ -8,16 +8,16 @@ import { useApplications } from '../../context/ApplicationContext'
 
 const navs = {
   student: [
-    ['Dashboard','/student/dashboard',LayoutDashboard],['My Profile','/student/profile',UserRound],['Skill Analysis','/student/skill-analysis',ScanSearch],['Career Roadmap','/student/roadmap',Map],['Opportunities','/student/opportunities',BriefcaseBusiness],['Applications','/student/applications',FileClock],['LeetCode','/student/leetcode',Code2],['LinkedIn Resume','/student/linkedin-resume',Linkedin],['Projects','/student/projects',FolderKanban],['Certificates','/student/certificates',Award],['Messages','/student/messages',MessageSquare],['Notifications','/student/notifications',Bell],['Settings','/student/settings',Settings],
+    ['Dashboard','/student/dashboard',LayoutDashboard],['My Profile','/student/profile',UserRound],['Skill Analysis','/student/skill-analysis',ScanSearch],['Career Roadmap','/student/roadmap',Map],['Opportunities','/student/opportunities',BriefcaseBusiness],['Applications','/student/applications',FileClock],['LeetCode','/student/leetcode',Code2],['LinkedIn Resume','/student/linkedin-resume',Linkedin],['Projects','/student/projects',FolderKanban],['Certificates','/student/certificates',Award],['Messages','/student/messages',MessageSquare],['Notifications','/student/notifications',Bell],['Contact','/student/contact',Phone],['Settings','/student/settings',Settings],
   ],
   faculty: [
-    ['Dashboard','/faculty/dashboard',LayoutDashboard],['Students','/faculty/students',UsersRound],['Skill Analytics','/faculty/analytics',ChartNoAxesCombined],['Industry Collaboration','/faculty/collaboration',Handshake],['Training Programs','/faculty/training',Presentation],['Communications','/faculty/communications',MessageSquare],['Reports','/faculty/reports',FileChartColumn],['Settings','/faculty/settings',Settings],
+    ['Dashboard','/faculty/dashboard',LayoutDashboard],['Students','/faculty/students',UsersRound],['Skill Analytics','/faculty/analytics',ChartNoAxesCombined],['Industry Collaboration','/faculty/collaboration',Handshake],['Training Programs','/faculty/training',Presentation],['Communications','/faculty/communications',MessageSquare],['Reports','/faculty/reports',FileChartColumn],['Contact','/faculty/contact',Phone],['Settings','/faculty/settings',Settings],
   ],
   company: [
-    ['Dashboard','/company/dashboard',LayoutDashboard],['Post Opportunity','/company/post-opportunity',PlusSquare],['Manage Opportunities','/company/opportunities',BriefcaseBusiness],['Applications','/company/applications',ClipboardList],['Find Students','/company/students',Search],['Analytics','/company/analytics',ChartNoAxesCombined],['Messages','/company/messages',MessageSquare],['Company Profile','/company/profile',Building2],['Settings','/company/settings',Settings],
+    ['Dashboard','/company/dashboard',LayoutDashboard],['Post Opportunity','/company/post-opportunity',PlusSquare],['Manage Opportunities','/company/opportunities',BriefcaseBusiness],['Applications','/company/applications',ClipboardList],['Find Students','/company/students',Search],['Analytics','/company/analytics',ChartNoAxesCombined],['Messages','/company/messages',MessageSquare],['Company Profile','/company/profile',Building2],['Contact','/company/contact',Phone],['Settings','/company/settings',Settings],
   ],
   admin: [
-    ['Dashboard','/admin/dashboard',LayoutDashboard],['Institutions','/admin/institutions',Landmark],['Industry Partners','/admin/companies',Building2],['Students','/admin/students',UsersRound],['Opportunities','/admin/opportunities',BriefcaseBusiness],['Applications','/admin/applications',ClipboardList],['Reports','/admin/reports',FileChartColumn],['Announcements','/admin/announcements',Megaphone],['Settings','/admin/settings',Settings],
+    ['Dashboard','/admin/dashboard',LayoutDashboard],['Institutions','/admin/institutions',Landmark],['Industry Partners','/admin/companies',Building2],['Students','/admin/students',UsersRound],['Opportunities','/admin/opportunities',BriefcaseBusiness],['Applications','/admin/applications',ClipboardList],['Reports','/admin/reports',FileChartColumn],['Announcements','/admin/announcements',Megaphone],['Contact','/admin/contact',Phone],['Settings','/admin/settings',Settings],
   ],
 }
 

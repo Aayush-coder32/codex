@@ -8,7 +8,7 @@ import { StudentDashboard, StudentProfile, SkillAnalysis, StudentRoadmap, Studen
 import { FacultyAnalytics, FacultyCollaboration, FacultyCollaborationDetail, FacultyDashboard, FacultyReports, FacultyStudents, FacultyTraining } from './pages/faculty/FacultyPages'
 import { CompanyAnalytics, CompanyApplications, CompanyDashboard, CompanyProfile, FindStudents, ManageOpportunities, PostOpportunity } from './pages/company/CompanyPages'
 import { AdminAnnouncements, AdminApplications, AdminCompanies, AdminDashboard, AdminInstitutions, AdminOpportunities, AdminReports, AdminStudents } from './pages/admin/AdminPages'
-import { CareerOpportunitiesPage, NotificationsPage, SettingsPage } from './pages/shared/SharedPages'
+import { CareerOpportunitiesPage, ContactPage, NotificationsPage, SettingsPage } from './pages/shared/SharedPages'
 import { EmptyState, ToastHost } from './components/common/UI'
 import { Compass } from 'lucide-react'
 
@@ -58,6 +58,7 @@ export default function App() {
       <Route path="/student/certificates" element={<CertificatesPage/>}/>
       <Route path="/student/messages" element={<CareerOpportunitiesPage/>}/>
       <Route path="/student/notifications" element={<NotificationsPage/>}/>
+      <Route path="/student/contact" element={<ContactPage/>}/>
       <Route path="/student/settings" element={<SettingsPage/>}/>
     </Route>
 
@@ -71,6 +72,7 @@ export default function App() {
       <Route path="/faculty/communications" element={<CareerOpportunitiesPage/>}/>
       <Route path="/faculty/reports" element={<FacultyReports/>}/>
       <Route path="/faculty/settings" element={<SettingsPage/>}/>
+      <Route path="/faculty/contact" element={<ContactPage/>}/>
     </Route>
 
     <Route element={<RequireRole role="company"><AppShell role="company"/></RequireRole>}>
@@ -83,6 +85,7 @@ export default function App() {
       <Route path="/company/messages" element={<CareerOpportunitiesPage/>}/>
       <Route path="/company/profile" element={<CompanyProfile/>}/>
       <Route path="/company/settings" element={<SettingsPage/>}/>
+      <Route path="/company/contact" element={<ContactPage/>}/>
     </Route>
 
     <Route element={<RequireRole role="admin"><AppShell role="admin"/></RequireRole>}>
@@ -95,6 +98,7 @@ export default function App() {
       <Route path="/admin/reports" element={<AdminReports/>}/>
       <Route path="/admin/announcements" element={<AdminAnnouncements/>}/>
       <Route path="/admin/settings" element={<SettingsPage/>}/>
+      <Route path="/admin/contact" element={<ContactPage/>}/>
     </Route>
     <Route path="*" element={<NotFound/>}/>
   </Routes>

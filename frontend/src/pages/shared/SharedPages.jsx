@@ -1,10 +1,19 @@
 import { useEffect, useMemo, useState } from 'react'
-import { Bell, CheckCheck, Clock3, FileUp, Inbox, MessageSquare, MoreHorizontal, Paperclip, Search, Send, ShieldCheck, SlidersHorizontal, Trash2, UserRound, LockKeyhole, Palette, Globe2, HelpCircle, Save, CheckCircle2, ArrowUpRight, Archive, Sparkles } from 'lucide-react'
+import { Bell, CheckCheck, Clock3, FileUp, Inbox, MessageSquare, MoreHorizontal, Paperclip, Search, Send, ShieldCheck, SlidersHorizontal, Trash2, UserRound, LockKeyhole, Palette, Globe2, HelpCircle, Save, CheckCircle2, ArrowUpRight, Archive, Sparkles, Mail, Phone, MapPin } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import { EmptyState, PageHeader, ProfileAvatar, SelectField, Field, Tabs } from '../../components/common/UI'
 import { useUser } from '../../context/UserContext'
 import { useNotifications } from '../../context/NotificationContext'
 import { useAuth } from '../../context/AuthContext'
+
+export function ContactPage() {
+  const contacts = [
+    { icon: Phone, label: 'Phone', value: '+91 11 8001 2345', href: 'tel:+911180012345', tone: 'bg-blue-50 text-blue-600' },
+    { icon: Mail, label: 'Email', value: 'hello@skillbridge.demo', href: 'mailto:hello@skillbridge.demo', tone: 'bg-emerald-50 text-emerald-600' },
+    { icon: MapPin, label: 'Office', value: 'New Delhi · Bengaluru · Remote', tone: 'bg-violet-50 text-violet-600' },
+  ]
+  return <><PageHeader eyebrow="Get in touch" title="Contact SkillBridge" description="Our team is here to help with partnerships, opportunities and account support."/><section className="card overflow-hidden"><div className="bg-gradient-to-r from-navy-900 via-blue-800 to-blue-600 p-6 text-white sm:p-8"><p className="text-sm font-semibold text-blue-100">SkillBridge team</p><h2 className="mt-2 text-2xl font-extrabold">Let’s build the right bridge.</h2><p className="mt-3 max-w-2xl text-sm leading-6 text-blue-100">Contact us for company partnerships, student opportunities, institution programs and general support.</p></div><div className="grid gap-4 p-5 sm:grid-cols-3 sm:p-7">{contacts.map(({ icon: Icon, label, value, href, tone }) => <div key={label} className="rounded-2xl border border-slate-200 p-5"><span className={`grid h-11 w-11 place-items-center rounded-xl ${tone}`}><Icon size={20}/></span><p className="mt-4 text-xs font-bold uppercase tracking-wider text-slate-400">{label}</p>{href ? <a href={href} className="mt-1 block text-sm font-bold text-navy-900 hover:text-blue-600">{value}</a> : <p className="mt-1 text-sm font-bold text-navy-900">{value}</p>}</div>)}</div></section></>
+}
 
 export function MessagesPage() {
   const { toast }=useUser(), { user, accessToken }=useAuth()
