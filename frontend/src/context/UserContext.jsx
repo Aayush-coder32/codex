@@ -29,7 +29,7 @@ export function UserProvider({ children }) {
   const [projects, setProjects] = useLocalStorage('skillbridge_projects', defaultProjects)
   const [certificates, setCertificates] = useLocalStorage('skillbridge_certificates', defaultCertificates)
   const [workshops, setWorkshops] = useLocalStorage('skillbridge_workshops', initialWorkshops)
-  const [students, setStudents] = useLocalStorage('skillbridge_students', initialStudents)
+  const [students, setStudents] = useLocalStorage('skillbridge_students', [])
   const [toasts, setToasts] = useState([])
 
   const toast = useCallback((message, tone = 'success') => {

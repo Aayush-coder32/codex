@@ -5,7 +5,7 @@ import { ForgotPassword, Login, Signup } from './pages/auth/AuthPages'
 import AppShell from './components/layout/AppShell'
 import { useAuth } from './context/AuthContext'
 import { StudentDashboard, StudentProfile, SkillAnalysis, StudentRoadmap, StudentOpportunities, OpportunityDetails, StudentApplications, ProjectsPage, CertificatesPage, LeetCodePage, LinkedInResumePage } from './pages/student/StudentPages'
-import { FacultyAnalytics, FacultyCollaboration, FacultyCollaborationDetail, FacultyDashboard, FacultyReports, FacultyStudents, FacultyTraining } from './pages/faculty/FacultyPages'
+import { FacultyAddStudent, FacultyAnalytics, FacultyCollaboration, FacultyCollaborationDetail, FacultyDashboard, FacultyReports, FacultyStudents, FacultyTraining } from './pages/faculty/FacultyPages'
 import { CompanyAnalytics, CompanyApplications, CompanyDashboard, CompanyProfile, FindStudents, ManageOpportunities, PostOpportunity } from './pages/company/CompanyPages'
 import { AdminAnnouncements, AdminApplications, AdminCompanies, AdminDashboard, AdminInstitutions, AdminOpportunities, AdminReports, AdminStudents } from './pages/admin/AdminPages'
 import { CareerOpportunitiesPage, ContactPage, NotificationsPage, SettingsPage } from './pages/shared/SharedPages'
@@ -65,6 +65,7 @@ export default function App() {
     <Route element={<RequireRole role="faculty"><AppShell role="faculty"/></RequireRole>}>
       <Route path="/faculty/dashboard" element={<FacultyDashboard/>}/>
       <Route path="/faculty/students" element={<FacultyStudents/>}/>
+      <Route path="/faculty/students/add" element={<FacultyAddStudent/>}/>
       <Route path="/faculty/analytics" element={<FacultyAnalytics/>}/>
       <Route path="/faculty/training" element={<FacultyTraining/>}/>
       <Route path="/faculty/collaboration" element={<FacultyCollaboration/>}/>
