@@ -13,13 +13,14 @@ import institutionRoutes from './institutionRoutes.js'
 import analyticsRoutes from './analyticsRoutes.js'
 import leetCodeRoutes from './leetCodeRoutes.js'
 import interviewPreparationRoutes from './interviewPreparationRoutes.js'
+import enquiryRoutes from './enquiryRoutes.js'
 
 const router = Router()
 
 router.get('/', (_req, res) => res.json({
   data: {
     name: 'SkillBridge API', version: '1.0.0',
-    endpoints: ['auth', 'users', 'students', 'companies', 'institutions', 'opportunities', 'applications', 'workshops', 'conversations', 'notifications', 'announcements', 'analytics'],
+    endpoints: ['auth', 'users', 'students', 'companies', 'institutions', 'opportunities', 'applications', 'workshops', 'conversations', 'notifications', 'announcements', 'analytics', 'enquiries'],
   },
 }))
 router.use('/auth', authRoutes)
@@ -36,5 +37,6 @@ router.use('/announcements', announcementRoutes)
 router.use('/analytics', analyticsRoutes)
 router.use('/leetcode', leetCodeRoutes)
 router.use('/interview-preparations', interviewPreparationRoutes)
+router.use('/enquiries', enquiryRoutes)
 
 export default router

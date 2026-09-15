@@ -38,6 +38,12 @@ export const leetCodeRegisterSchema = request({ body: z.object({
 }) })
 export const leetCodeLoginSchema = request({ body: z.object({ email, password: z.string().min(1).max(72) }) })
 export const forgotPasswordSchema = request({ body: z.object({ email }) })
+export const enquiryCreateSchema = request({ body: z.object({
+  name: z.string().trim().min(2).max(100),
+  email,
+  interest: z.string().trim().min(2).max(120),
+  message: z.string().trim().min(2).max(3000),
+}) })
 export const resetPasswordSchema = request({ body: z.object({ token: z.string().min(20), password }) })
 export const changePasswordSchema = request({ body: z.object({ currentPassword: z.string().min(1), newPassword: password }) })
 

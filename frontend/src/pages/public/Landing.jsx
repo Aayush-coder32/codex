@@ -109,6 +109,10 @@ export default function Landing() {
   const [navOpen, setNavOpen] = useState(false)
   const [videoOpen, setVideoOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const [enquiry, setEnquiry] = useState({ name: '', email: '', interest: 'Hire skilled talent', message: '' })
+  const [enquiryStatus, setEnquiryStatus] = useState('idle')
+  const [enquiryError, setEnquiryError] = useState('')
+  const [enquirySuccessOpen, setEnquirySuccessOpen] = useState(false)
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 28)
@@ -116,6 +120,28 @@ export default function Landing() {
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
+
+  const submitEnquiry = async (event) => {
+    event.preventDefault()
+    setEnquiryStatus('submitting')
+    setEnquiryError('')
+    try {
+      const apiBaseUrl = (import.meta.env.VITE_API_URL || '').replace(/\/$/, '')
+      const response = await fetch(`${apiBaseUrl}/api/v1/enquiries`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(enquiry),
+      })
+      const payload = await response.json().catch(() => null)
+      if (!response.ok) throw new Error(payload?.error?.message || 'We could not submit your enquiry. Please try again.')
+      setEnquiry({ name: '', email: '', interest: 'Hire skilled talent', message: '' })
+      setEnquirySuccessOpen(true)
+    } catch (error) {
+      setEnquiryError(error.message)
+    } finally {
+      setEnquiryStatus('idle')
+    }
+  }
 
   const closeNav = () => setNavOpen(false)
 
@@ -378,14 +404,15 @@ export default function Landing() {
               </div>
             </div>
 
-            <form className="rounded-2xl border border-slate-200 bg-[#f8fafc] p-6 shadow-sm sm:p-8" onSubmit={(event) => event.preventDefault()}>
+            <form className="rounded-2xl border border-slate-200 bg-[#f8fafc] p-6 shadow-sm sm:p-8" onSubmit={submitEnquiry}>
               <div className="grid gap-4 sm:grid-cols-2">
-                <label className="text-xs font-bold text-[#102044]">Your name<input required className="mt-2 h-11 w-full rounded-lg border border-slate-200 bg-white px-3 text-sm font-normal outline-none transition focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100" placeholder="Full name" /></label>
-                <label className="text-xs font-bold text-[#102044]">Work email<input required type="email" className="mt-2 h-11 w-full rounded-lg border border-slate-200 bg-white px-3 text-sm font-normal outline-none transition focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100" placeholder="you@company.com" /></label>
-                <label className="text-xs font-bold text-[#102044] sm:col-span-2">I am looking to<select className="mt-2 h-11 w-full rounded-lg border border-slate-200 bg-white px-3 text-sm font-normal outline-none transition focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100"><option>Hire skilled talent</option><option>Build an institution program</option><option>Find learning opportunities</option><option>Partner on a project</option></select></label>
-                <label className="text-xs font-bold text-[#102044] sm:col-span-2">Tell us about your goal<textarea required rows="4" className="mt-2 w-full resize-none rounded-lg border border-slate-200 bg-white p-3 text-sm font-normal outline-none transition focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100" placeholder="A little context helps us route your enquiry faster." /></label>
+                <label className="text-xs font-bold text-[#102044]">Your name<input required value={enquiry.name} onChange={(event) => setEnquiry({ ...enquiry, name: event.target.value })} className="mt-2 h-11 w-full rounded-lg border border-slate-200 bg-white px-3 text-sm font-normal outline-none transition focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100" placeholder="Full name" /></label>
+                <label className="text-xs font-bold text-[#102044]">Work email<input required type="email" value={enquiry.email} onChange={(event) => setEnquiry({ ...enquiry, email: event.target.value })} className="mt-2 h-11 w-full rounded-lg border border-slate-200 bg-white px-3 text-sm font-normal outline-none transition focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100" placeholder="you@company.com" /></label>
+                <label className="text-xs font-bold text-[#102044] sm:col-span-2">I am looking to<select value={enquiry.interest} onChange={(event) => setEnquiry({ ...enquiry, interest: event.target.value })} className="mt-2 h-11 w-full rounded-lg border border-slate-200 bg-white px-3 text-sm font-normal outline-none transition focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100"><option>Hire skilled talent</option><option>Build an institution program</option><option>Find learning opportunities</option><option>Partner on a project</option></select></label>
+                <label className="text-xs font-bold text-[#102044] sm:col-span-2">Tell us about your goal<textarea required rows="4" value={enquiry.message} onChange={(event) => setEnquiry({ ...enquiry, message: event.target.value })} className="mt-2 w-full resize-none rounded-lg border border-slate-200 bg-white p-3 text-sm font-normal outline-none transition focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100" placeholder="A little context helps us route your enquiry faster." /></label>
               </div>
-              <button type="submit" className="mt-5 inline-flex h-11 items-center gap-2 rounded-lg bg-[#102044] px-6 text-xs font-extrabold text-white transition hover:bg-[#173c77]">Send enquiry <ArrowRight size={15} /></button>
+              {enquiryError && <p className="mt-4 text-sm font-semibold text-rose-600" role="alert">{enquiryError}</p>}
+              <button type="submit" disabled={enquiryStatus === 'submitting'} className="mt-5 inline-flex h-11 items-center gap-2 rounded-lg bg-[#102044] px-6 text-xs font-extrabold text-white transition hover:bg-[#173c77] disabled:cursor-not-allowed disabled:opacity-60">{enquiryStatus === 'submitting' ? 'Submitting...' : 'Send enquiry'} <ArrowRight size={15} /></button>
             </form>
           </div>
         </section>
