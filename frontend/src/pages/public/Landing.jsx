@@ -435,6 +435,14 @@ export default function Landing() {
         </div>
       </footer>
 
+      <Modal open={enquirySuccessOpen} onClose={() => setEnquirySuccessOpen(false)} title="Form submitted successfully">
+        <div className="text-center">
+          <span className="mx-auto grid h-14 w-14 place-items-center rounded-full bg-emerald-100 text-emerald-600"><Check size={28} /></span>
+          <p className="mt-4 text-sm leading-6 text-slate-600">Thank you for your enquiry. Our team will get back to you soon.</p>
+          <button type="button" onClick={() => setEnquirySuccessOpen(false)} className="mt-6 rounded-lg bg-[#102044] px-5 py-2.5 text-sm font-bold text-white transition hover:bg-[#173c77]">Close</button>
+        </div>
+      </Modal>
+
       <Modal open={videoOpen} onClose={() => setVideoOpen(false)} title="From classrooms to careers" description="See how every part of the SkillBridge network works together." size="lg">
         <div className="overflow-hidden rounded-2xl bg-[#082632] p-6 text-white sm:p-8">
           <div className="grid gap-5 sm:grid-cols-3">
