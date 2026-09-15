@@ -40,5 +40,6 @@ router.use('/leetcode', leetCodeRoutes)
 router.use('/interview-preparations', interviewPreparationRoutes)
 router.use('/enquiries', enquiryRoutes)
 router.use('/faculty-student-submissions', facultyStudentSubmissionRoutes)
+router.use('/faculty-qualifications', facultyStudentSubmissionRoutes)
 
 export default router

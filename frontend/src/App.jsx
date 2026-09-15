@@ -65,7 +65,7 @@ export default function App() {
     <Route element={<RequireRole role="faculty"><AppShell role="faculty"/></RequireRole>}>
       <Route path="/faculty/dashboard" element={<FacultyDashboard/>}/>
       <Route path="/faculty/students" element={<FacultyStudents/>}/>
-      <Route path="/faculty/students/add" element={<FacultyAddStudent/>}/>
+      <Route path="/faculty/qualification" element={<FacultyAddStudent/>}/>
       <Route path="/faculty/analytics" element={<FacultyAnalytics/>}/>
       <Route path="/faculty/training" element={<FacultyTraining/>}/>
       <Route path="/faculty/collaboration" element={<FacultyCollaboration/>}/>

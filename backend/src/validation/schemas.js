@@ -45,7 +45,7 @@ export const enquiryCreateSchema = request({ body: z.object({
   message: z.string().trim().min(2).max(3000),
 }) })
 export const facultyStudentSubmissionSchema = request({ body: z.object({
-  name: z.string().trim().min(2).max(100), qualification: z.string().trim().min(2).max(160),
+  name: z.string().trim().min(2).max(100), email, department: z.string().trim().min(2).max(160), qualification: z.string().trim().min(2).max(160),
 }) })
 export const resetPasswordSchema = request({ body: z.object({ token: z.string().min(20), password }) })
 export const changePasswordSchema = request({ body: z.object({ currentPassword: z.string().min(1), newPassword: password }) })
