@@ -134,14 +134,14 @@ export function FacultyStudents() {
 
 export function FacultyAddStudent() {
   const { accessToken } = useAuth()
-  const [submitting, setSubmitting] = useState(false), [success, setSuccess] = useState(false), [error, setError] = useState('')
+  const [submitting, setSubmitting] = useState(false), [success, setSuccess] = useState(false), [error, setError] = useState(''), [submitted, setSubmitted] = useState(null)
   const submit = async (event) => {
-    event.preventDefault(); const form = event.currentTarget; setSubmitting(true); setError('')
+    event.preventDefault(); const form = event.currentTarget; const formData = new FormData(form); setSubmitting(true); setError('')
     try {
-      const response = await fetch(`${(import.meta.env.VITE_API_URL || '').replace(/\/$/, '')}/api/v1/faculty-student-submissions`, { method: 'POST', credentials: 'include', headers: { Authorization: `Bearer ${accessToken}` }, body: new FormData(event.currentTarget) })
+      const response = await fetch(`${(import.meta.env.VITE_API_URL || '').replace(/\/$/, '')}/api/v1/faculty-qualifications`, { method: 'POST', credentials: 'include', headers: { Authorization: `Bearer ${accessToken}` }, body: formData })
       const payload = await response.json().catch(() => null)
       if (!response.ok) throw new Error(payload?.error?.message || 'Could not submit the form. Please try again.')
-      form.reset(); setSuccess(true)
+      setSubmitted({ name: formData.get('name'), email: formData.get('email'), department: formData.get('department'), qualification: formData.get('qualification') }); form.reset(); setSuccess(true)
     } catch (submissionError) { setError(submissionError.message) } finally { setSubmitting(false) }
   }
   const uploads = [['photo', 'Student photo', 'image/*'], ['signature', 'Student signature', 'image/*'], ['class10Marksheet', '10th marksheet', '.pdf,image/*'], ['class12Marksheet', '12th marksheet', '.pdf,image/*'], ['btechMarksheet', 'B.Tech marksheet', '.pdf,image/*'], ['mtechMarksheet', 'M.Tech marksheet', '.pdf,image/*']]
